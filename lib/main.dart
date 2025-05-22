@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:swift_mobile_app/core/utils/app_colors.dart';
+import 'package:swift_mobile_app/core/helper_functions/on_generate_routes.dart';
+import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 
 void main() {
   runApp(
@@ -22,12 +23,13 @@ class SwiftMobileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: onGenerateRoutes,
       theme: ThemeData(
         fontFamily: 'duco',
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: Scaffold(body: Text('data')),
+      initialRoute: OnboardingView.routeName,
     );
   }
 }
