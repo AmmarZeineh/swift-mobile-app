@@ -6,6 +6,6 @@ class SellerSignupView extends StatelessWidget {
   static const routeName = 'seller-signup-view';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SellerSignupViewBody());
+    return Scaffold(body: SafeArea(child: SellerSignupViewBody()));
   }
 }
