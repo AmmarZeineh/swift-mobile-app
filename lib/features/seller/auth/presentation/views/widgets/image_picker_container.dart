@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:swift_mobile_app/core/utils/app_images.dart';
+import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 
 class ImagePickerContainer extends StatefulWidget {
   const ImagePickerContainer({super.key, required this.onChanged});
@@ -38,7 +37,12 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
           decoration: const BoxDecoration(shape: BoxShape.circle),
           child:
               imageFile == null
-                  ? FittedBox(child: SvgPicture.asset(Assets.imagesProfileIcon))
+                  ? FittedBox(
+                    child: Text(
+                      'انقر لرفع صورة هويتك',
+                      style: AppTextStyles.w400_16,
+                    ),
+                  )
                   : Image.file(imageFile!),
         ),
       ),
