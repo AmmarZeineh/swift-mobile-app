@@ -23,14 +23,15 @@ class SupabaseDatabaseService extends DataBaseService {
   @override
   Future getData({
     required String path,
-    String? docId,
+    String? columnName,
+    String? columnValue,
     Map<String, dynamic>? query,
   }) async {
     try {
-      if (docId == null) {
+      if (columnValue == null || columnName == null) {
         return await _supabase.from(path).select();
       } else {
-        return await _supabase.from(path).select().eq('id', docId);
+        return await _supabase.from(path).select().eq(columnName, columnValue);
       }
     } catch (e) {
       throw CustomException(message: e.toString());
@@ -47,6 +48,19 @@ class SupabaseDatabaseService extends DataBaseService {
       await _supabase.from(path).update(data).eq('id', id);
     } catch (e) {
       log(e.toString());
+      throw CustomException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteData({
+    required String path,
+    required String id,
+    required String column,
+  }) async {
+    try {
+      await _supabase.from(path).delete().eq(column, id);
+    } catch (e) {
       throw CustomException(message: e.toString());
     }
   }

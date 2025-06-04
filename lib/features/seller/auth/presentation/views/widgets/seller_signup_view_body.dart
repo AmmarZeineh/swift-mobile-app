@@ -8,7 +8,8 @@ import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/widgets/custom_text_form_field.dart';
-import 'package:swift_mobile_app/features/seller/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
+import 'package:swift_mobile_app/features/seller/auth/presentation/cubits/seller_signup_cubit/seller_signup_cubit.dart';
+import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/widgets/custom_header.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/widgets/image_picker_container.dart';
 
@@ -128,6 +129,22 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                         title: 'عنوان متجرك بالتفصيل',
                         textInputType: TextInputType.text,
                       ),
+                      SizedBox(height: 16),
+
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            SellerLoginView.routName,
+                          );
+                        },
+                        child: Text(
+                          'لديك حساب بالفعل؟',
+                          style: AppTextStyles.w400_16.copyWith(
+                            color: AppColors.secondaryColor,
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 30),
                     ],
                   ),
@@ -144,7 +161,7 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                     if (image == null) {
                       errorSnackBar(context, 'يرجى اختيار صورة هوية');
                     } else {
-                      context.read<SignupCubit>().signupSeller(
+                      context.read<SellerSignupCubit>().signupSeller(
                         email!,
                         password!,
                         name!,

@@ -90,4 +90,56 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, SellerEntity>> loginSeller({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      var resultIfRejected = await _dataBaseService.getData(
+        path: BackendEndpoints.rejectedSellers,
+        columnName: 'email',
+        columnValue: email,
+      );
+      if (resultIfRejected.isNotEmpty) {
+        return Left(ServerFailure('تم رفض حسابك'));
+      }
+      var pendingResult = await _dataBaseService.getData(
+        path: BackendEndpoints.pendingSellers,
+        columnName: 'email',
+        columnValue: email,
+      );
+      if (pendingResult.isNotEmpty) {
+        return Left(ServerFailure('حسابك قيد المراجعة'));
+      }
+      var user = await _supabaseAuthService.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      var userData = await _dataBaseService.getData(
+        path: BackendEndpoints.users,
+        columnName: 'id',
+        columnValue: user.id,
+      );
+      var sellerData = await _dataBaseService.getData(
+        path: BackendEndpoints.sellers,
+        columnName: 'user_id',
+        columnValue: user.id,
+      );
+      SellerEntity sellerEntity = SellerEntity(
+        id: userData[0]['id'],
+        image: sellerData[0]['image_url'],
+        userName: userData[0]['name'],
+        email: userData[0]['email'],
+        phoneNumber: userData[0]['phone'].toString(),
+        storeName: sellerData[0]['store_name'],
+        storeAddress: userData[0]['address'],
+      );
+      return Right(sellerEntity);
+    } catch (e) {
+      log(e.toString());
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

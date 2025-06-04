@@ -30,21 +30,22 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
           setState(() {});
         } else {}
       },
-      child: ClipOval(
-        child: Container(
-          height: 150.h,
-          width: 150.w,
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          child:
-              imageFile == null
-                  ? FittedBox(
-                    child: Text(
-                      'انقر لرفع صورة هويتك',
-                      style: AppTextStyles.w400_16,
-                    ),
-                  )
-                  : Image.file(imageFile!),
-        ),
+      child: Container(
+        height: 180.h,
+        width: double.infinity,
+        decoration: const BoxDecoration(shape: BoxShape.circle),
+        child:
+            imageFile == null
+                ? Center(
+                  child: Text(
+                    'انقر لرفع صورة هويتك',
+                    style: AppTextStyles.w400_16,
+                  ),
+                )
+                : Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Image.file(imageFile!, fit: BoxFit.fill),
+                ),
       ),
     );
   }

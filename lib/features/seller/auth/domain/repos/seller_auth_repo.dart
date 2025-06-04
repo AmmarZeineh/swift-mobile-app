@@ -18,4 +18,9 @@ abstract class SellerAuthRepo {
     required String userId,
     required String profilePicUrl,
   });
+
+   Future<Either<Failure, SellerEntity>> loginSeller({
+    required String email,
+    required String password,
+  });
 }

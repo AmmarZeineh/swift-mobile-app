@@ -27,7 +27,6 @@ void main() async {
 class SwiftMobileApp extends StatelessWidget {
   const SwiftMobileApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
