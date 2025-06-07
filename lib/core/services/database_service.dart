@@ -5,7 +5,7 @@ abstract class DataBaseService {
     String? docId,
   });
   Future<dynamic> getData({
-    required String path,
+    required String tableName,
     String? docId,
     Map<String, dynamic>? query,
   });
