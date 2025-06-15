@@ -19,7 +19,7 @@ class HomeRepoImpl implements HomeRepo {
     try {
       List<CategoryCardEntity> categories = [];
       var data = await dataBaseService.getData(
-        tableName: BackendEndpoints.categories,
+        path: BackendEndpoints.categories,
       );
       for (var i = 0; i < data.length; i++) {
         categories.add(CategoryModel.fromJson(data[i]).toEntity());
@@ -36,11 +36,9 @@ class HomeRepoImpl implements HomeRepo {
       List<ProductEntity> products = [];
 
       var data = await dataBaseService.getData(
-        tableName: BackendEndpoints.products,
+        path: BackendEndpoints.products,
       );
       for (var i = 0; i < data.length; i++) {
-        log(data[i].toString());
-
         products.add(ProductModel.fromJson(data[i]).toEntity());
       }
 

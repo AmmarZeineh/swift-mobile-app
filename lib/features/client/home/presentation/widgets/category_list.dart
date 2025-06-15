@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/features/client/home/domain/entities/category_card_entity.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/category_card.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/widgets/category_card.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({super.key, required this.categories});

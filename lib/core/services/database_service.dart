@@ -5,8 +5,9 @@ abstract class DataBaseService {
     String? docId,
   });
   Future<dynamic> getData({
-    required String tableName,
-    String? docId,
+    required String path,
+    String? columnName,
+    String? columnValue,
     Map<String, dynamic>? query,
   });
 
@@ -14,5 +15,11 @@ abstract class DataBaseService {
     required String path,
     required String id,
     required Map<String, dynamic> data,
+  });
+
+  Future<void> deleteData({
+    required String path,
+    required String id,
+    required String column,
   });
 }

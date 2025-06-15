@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/product_card.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/widgets/product_card.dart';
 
 class ProductsGridView extends StatefulWidget {
   const ProductsGridView({super.key, required this.products});
@@ -25,7 +25,7 @@ class _ProductsGridViewState extends State<ProductsGridView> {
         ),
         itemCount: widget.products.length,
         itemBuilder: (context, index) {
-          return ProductCard(product: widget.products[index]);
+          return ProductCard(product: widget.products[index], index: index);
         },
       ),
     );

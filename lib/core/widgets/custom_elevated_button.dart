@@ -7,14 +7,16 @@ class CustomElevatedButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
+    this.width = double.infinity,
   });
   final String title;
   final void Function() onPressed;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: width,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

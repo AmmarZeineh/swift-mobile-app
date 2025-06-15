@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/widgets/custom_app_bar.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/cubits/fetch_categories_cubit/fetch_categories_cubit.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/cubits/fetch_product_cubit/fetch_products_cubit.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/category_list.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/nav_bar.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/products_grid_view.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/widgets/category_list.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/widgets/nav_bar.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/widgets/products_grid_view.dart';
 
 class ClientHomeViewBody extends StatefulWidget {
   const ClientHomeViewBody({super.key});

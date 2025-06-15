@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swift_mobile_app/app_keys.dart';
 import 'package:swift_mobile_app/core/helper_functions/on_generate_routes.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
+import 'package:swift_mobile_app/features/client/product_details/presentation/views/product_details_view.dart';
 import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 
 void main() async {
@@ -35,6 +36,10 @@ class SwiftMobileApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       initialRoute: OnboardingView.routeName,
+      routes: {
+        ClientProductInfoView.routName:
+            (context) => const ClientProductInfoView(),
+      },
     );
   }
 }

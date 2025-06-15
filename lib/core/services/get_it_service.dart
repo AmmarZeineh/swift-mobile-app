@@ -3,13 +3,17 @@ import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/core/services/supabase_database_service.dart';
 import 'package:swift_mobile_app/features/client/home/data/repos/home_repo_impl.dart';
 import 'package:swift_mobile_app/features/client/home/domain/repos/home_repo.dart';
+import 'package:swift_mobile_app/features/client/product_details/data/repo/product_details_repo_imp.dart';
+import 'package:swift_mobile_app/features/client/product_details/domain/repo/product_details_repo.dart';
 
 final GetIt getIt = GetIt.instance;
 
 void setupLocator() {
   getIt.registerSingleton<DataBaseService>(SupabaseDatabaseService());
   getIt.registerSingleton<HomeRepo>(HomeRepoImpl(getIt.get<DataBaseService>()));
-  // getIt.registerSingleton<CitiesRepo>(
+  getIt.registerSingleton<ProductDetailsRepo>(
+    ProductDetailsRepoImp(getIt.get<DataBaseService>()),
+  ); // getIt.registerSingleton<CitiesRepo>(
   //   CitiesRepoImpl(getIt.get<DataBaseService>()),
   // );
   // getIt.registerSingleton<CategoriesRepo>(
