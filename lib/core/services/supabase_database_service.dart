@@ -24,7 +24,7 @@ class SupabaseDatabaseService extends DataBaseService {
   Future getData({
     required String path,
     String? columnName,
-    String? columnValue,
+    dynamic columnValue,
     Map<String, dynamic>? query,
   }) async {
     try {

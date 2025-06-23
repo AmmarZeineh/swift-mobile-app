@@ -3,7 +3,9 @@ import 'package:swift_mobile_app/features/client/home/presentation/views/client_
 import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_signup_view.dart';
+import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_product_details_view.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -13,6 +15,13 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ClientHomeView());
     case SellerLoginView.routName:
       return MaterialPageRoute(builder: (_) => const SellerLoginView());
+    case SellerProductDetailsView.routeName:
+      return MaterialPageRoute(
+        builder:
+            (_) => SellerProductDetailsView(
+              productEntity: settings.arguments as ProductEntity,
+            ),
+      );
     case SellerHomeView.routeName:
       return MaterialPageRoute(builder: (_) => const SellerHomeView());
     case SellerSignupView.routeName:

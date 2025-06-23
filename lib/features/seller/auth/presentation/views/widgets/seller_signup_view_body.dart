@@ -153,29 +153,33 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: CustomElevatedButton(
-                title: 'تسجيل',
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    if (image == null) {
-                      errorSnackBar(context, 'يرجى اختيار صورة هوية');
+              child: SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
+                  title: 'تسجيل',
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      if (image == null) {
+                        errorSnackBar(context, 'يرجى اختيار صورة هوية');
+                      } else {
+                        context.read<SellerSignupCubit>().signupSeller(
+                          email!,
+                          password!,
+                          name!,
+                          phoneNumber!,
+                          storeName!,
+                          storeAddress!,
+                          image!,
+                        );
+                      }
                     } else {
-                      context.read<SellerSignupCubit>().signupSeller(
-                        email!,
-                        password!,
-                        name!,
-                        phoneNumber!,
-                        storeName!,
-                        storeAddress!,
-                        image!,
-                      );
+                      setState(() {});
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
                     }
-                  } else {
-                    setState(() {});
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
-                  }
-                },
+                  },
+                ),
               ),
             ),
           ],

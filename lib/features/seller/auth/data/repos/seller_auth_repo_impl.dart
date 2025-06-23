@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift_mobile_app/constants.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
+import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
@@ -31,6 +37,14 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
     File image,
   ) async {
     try {
+      var resultIfRejected = await _dataBaseService.getData(
+        path: BackendEndpoints.rejectedSellers,
+        columnName: 'email',
+        columnValue: email,
+      );
+      if (resultIfRejected.isNotEmpty) {
+        return Left(ServerFailure('تم رفض حسابك'));
+      }
       var user = await _supabaseAuthService.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -39,6 +53,7 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
 
       SellerModel sellerModel = SellerModel(
         id: user.id,
+        sellerId: 0,
         image: '',
         userName: userName,
         email: email,
@@ -50,6 +65,7 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       SellerEntity sellerEntity = SellerEntity(
         id: user.id,
         image: '',
+        sellerId: 0,
         userName: userName,
         email: email,
         phoneNumber: phoneNumber,
@@ -95,6 +111,7 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
   Future<Either<Failure, SellerEntity>> loginSeller({
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
     try {
       var resultIfRejected = await _dataBaseService.getData(
@@ -127,7 +144,9 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
         columnName: 'user_id',
         columnValue: user.id,
       );
-      SellerEntity sellerEntity = SellerEntity(
+      log(sellerData.toString());
+      SellerModel sellerModel = SellerModel(
+        sellerId: sellerData[0]['id'],
         id: userData[0]['id'],
         image: sellerData[0]['image_url'],
         userName: userData[0]['name'],
@@ -136,6 +155,9 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
         storeName: sellerData[0]['store_name'],
         storeAddress: userData[0]['address'],
       );
+      SellerEntity sellerEntity = sellerModel.toEntity();
+      Prefs.setString(sellerKey, jsonEncode(sellerModel.toJson()));
+      context.read<UserCubit>().setUser(sellerEntity);
       return Right(sellerEntity);
     } catch (e) {
       log(e.toString());

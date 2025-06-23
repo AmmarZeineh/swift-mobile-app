@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
 
@@ -19,8 +20,9 @@ abstract class SellerAuthRepo {
     required String profilePicUrl,
   });
 
-   Future<Either<Failure, SellerEntity>> loginSeller({
+  Future<Either<Failure, SellerEntity>> loginSeller({
     required String email,
     required String password,
+    required BuildContext context,
   });
 }

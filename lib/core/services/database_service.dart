@@ -7,7 +7,7 @@ abstract class DataBaseService {
   Future<dynamic> getData({
     required String path,
     String? columnName,
-    String? columnValue,
+    dynamic columnValue,
     Map<String, dynamic>? query,
   });
 

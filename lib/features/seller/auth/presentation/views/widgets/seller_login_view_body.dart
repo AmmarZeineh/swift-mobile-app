@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
@@ -87,20 +86,25 @@ class _SellerLoginViewBodyState extends State<SellerLoginViewBody> {
                 ],
               ),
               SizedBox(height: 40),
-              CustomElevatedButton(
-                title: 'تسجيل دخول',
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    context.read<SellerLoginCubit>().loginSeller(
-                      email!,
-                      password!,
-                    );
-                  } else {
-                    setState(() {});
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
-                  }
-                },
+              SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
+                  title: 'تسجيل دخول',
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      await context.read<SellerLoginCubit>().loginSeller(
+                        email!,
+                        password!,
+                        context,
+                      );
+                    } else {
+                      setState(() {});
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                    }
+                  },
+                ),
               ),
             ],
           ),

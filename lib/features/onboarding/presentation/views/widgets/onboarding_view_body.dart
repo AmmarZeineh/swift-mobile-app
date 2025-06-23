@@ -57,24 +57,32 @@ class OnboardingViewBody extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(height: 325.h),
-              CustomElevatedButton(
-                title: 'انا بائع',
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    SellerSignupView.routeName,
-                  );
-                },
+              SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
+                  title: 'انا بائع',
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      SellerSignupView.routeName,
+                    );
+                  },
+                ),
               ),
               SizedBox(height: 12),
-              CustomElevatedButton(
-                title: 'انا مشتري',
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    ClientHomeView.routeName,
-                  );
-                },
+              SizedBox(
+                width: double.infinity,
+                child: CustomElevatedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
+                  title: 'انا مشتري',
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      ClientHomeView.routeName,
+                    );
+                  },
+                ),
               ),
             ],
           ),
