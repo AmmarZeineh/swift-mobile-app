@@ -97,7 +97,8 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       log(userId);
       await _dataBaseService.updateData(
         path: BackendEndpoints.pendingSellers,
-        id: userId,
+        columnValue: userId,
+        columnName: 'id',
         data: {'imageUrl': profilePicUrl},
       );
       return right(null);
@@ -157,7 +158,9 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       );
       SellerEntity sellerEntity = sellerModel.toEntity();
       Prefs.setString(sellerKey, jsonEncode(sellerModel.toJson()));
-      context.read<UserCubit>().setUser(sellerEntity);
+      if (context.mounted) {
+        context.read<UserCubit>().setUser(sellerEntity);
+      }
       return Right(sellerEntity);
     } catch (e) {
       log(e.toString());

@@ -1,8 +1,6 @@
 // seller_home_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:swift_mobile_app/core/helper_functions/error_snack_bar.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
@@ -27,7 +25,7 @@ class SellerHomeView extends StatelessWidget {
             );
             return cubit;
           },
-          child: HomeViewBodyBlocConsumer(),
+          child: SellerHomeViewBody(),
         ),
       ),
       floatingActionButton: CustomElevatedButton(
@@ -39,25 +37,25 @@ class SellerHomeView extends StatelessWidget {
   }
 }
 
-// باقي الكود يبقى نفسه
-class HomeViewBodyBlocConsumer extends StatelessWidget {
-  const HomeViewBodyBlocConsumer({super.key});
+// // باقي الكود يبقى نفسه
+// class HomeViewBodyBlocConsumer extends StatelessWidget {
+//   const HomeViewBodyBlocConsumer({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<FetchProductsCubit, FetchProductsState>(
-      builder: (context, state) {
-        if (state is FetchProductsFailure) {
-          errorSnackBar(context, state.errMessage);
-        }
-        if (state is FetchProductsSuccess) {
-          return SellerHomeViewBody(products: state.products);
-        }
-        return ModalProgressHUD(
-          inAsyncCall: state is FetchProductsLoading,
-          child: SellerHomeViewBody(products: []),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<FetchProductsCubit, FetchProductsState>(
+//       builder: (context, state) {
+//         if (state is FetchProductsFailure) {
+//           errorSnackBar(context, state.errMessage);
+//         }
+//         if (state is FetchProductsSuccess) {
+//           return SellerHomeViewBody(products: state.products);
+//         }
+//         return ModalProgressHUD(
+//           inAsyncCall: state is FetchProductsLoading,
+//           child: SellerHomeViewBody(products: []),
+//         );
+//       },
+//     );
+//   }
+// }

@@ -1,57 +1,67 @@
-// seller_home_view_body.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/product_card_widget.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_product_details_view.dart';
 
 class SellerHomeViewBody extends StatelessWidget {
-  // غيرناها من StatefulWidget لـ StatelessWidget
-  const SellerHomeViewBody({super.key, required this.products});
-  final List<ProductEntity> products;
+  const SellerHomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              'منتجاتي',
-              style: AppTextStyles.w400_18,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 500,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 5 / 7.2,
-                ),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        SellerProductDetailsView.routeName,
-                        arguments:
-                            products[index], // استخدمنا products بدلاً من widget.products
+    return BlocBuilder<FetchProductsCubit, FetchProductsState>(
+      builder: (context, state) {
+        if (state is FetchProductsSuccess) {
+          final products = state.products;
+          return Column(
+            children: [
+              SizedBox(height: 8),
+              Text('منتجاتي', style: AppTextStyles.w400_18),
+              SizedBox(
+                height: 500,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 24,
+                  ),
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 5 / 7.2,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.pushNamed(
+                            context,
+                            SellerProductDetailsView.routeName,
+                            arguments: products[index],
+                          );
+                          if (result == true && context.mounted) {
+                            final userId =
+                                context.read<UserCubit>().currentUser!.sellerId;
+                            context.read<FetchProductsCubit>().fetchProducts(
+                              userId,
+                            );
+                          }
+                        },
+                        child: ProductCard(productEntity: products[index]),
                       );
                     },
-                    child: ProductCard(productEntity: products[index]),
-                  );
-                },
-                itemCount: products.length,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
+            ],
+          );
+        } else if (state is FetchProductsFailure) {
+          return Center(child: Text('فشل تحميل المنتجات'));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

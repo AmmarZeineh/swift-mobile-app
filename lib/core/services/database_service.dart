@@ -13,8 +13,9 @@ abstract class DataBaseService {
 
   Future<void> updateData({
     required String path,
-    required String id,
     required Map<String, dynamic> data,
+    required String columnName,
+    required dynamic columnValue,
   });
 
   Future<void> deleteData({

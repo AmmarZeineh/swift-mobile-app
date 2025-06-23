@@ -14,6 +14,8 @@ import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart
 import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
+import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
 
 void main() async {
@@ -26,17 +28,25 @@ void main() async {
   final bool hasUser = checkIfUserDataExist();
 
   final SellerEntity? user = hasUser ? getSellerData() : null;
-  
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (_, __) {
-        return BlocProvider(
-          create: (_) {
-            final cubit = UserCubit();
-            if (user != null) cubit.setUser(user);
-            return cubit;
-          },
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) {
+                final cubit = UserCubit();
+                if (user != null) cubit.setUser(user);
+                return cubit;
+              },
+            ),
+            BlocProvider(
+              create:
+                  (context) => FetchProductsCubit(getIt.get<SellerHomeRepo>()),
+            ),
+          ],
           child: const SwiftMobileApp(),
         );
       },

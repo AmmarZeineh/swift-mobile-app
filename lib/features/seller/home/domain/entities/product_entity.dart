@@ -1,4 +1,6 @@
-class ProductEntity {
+import 'package:equatable/equatable.dart';
+
+class ProductEntity extends Equatable {
   final int id;
   final int categoryId;
   final String name;
@@ -7,7 +9,7 @@ class ProductEntity {
   final List<dynamic> image;
   final int stock;
 
-  ProductEntity({
+  const ProductEntity({
     required this.id,
     required this.categoryId,
     required this.name,
@@ -16,4 +18,24 @@ class ProductEntity {
     required this.image,
     required this.stock,
   });
+
+  @override
+  List<Object?> get props => [id];
+
+  ProductEntity copyWith({
+    required String name,
+    required String description,
+    required num price,
+    required int stock,
+  }) {
+    return ProductEntity(
+      id: id,
+      categoryId: categoryId,
+      name: name,
+      price: price.toInt(),
+      description: description,
+      image: image,
+      stock: stock,
+    );
+  }
 }

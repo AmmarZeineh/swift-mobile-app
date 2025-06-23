@@ -37,20 +37,30 @@ class SupabaseDatabaseService extends DataBaseService {
       throw CustomException(message: e.toString());
     }
   }
-
-  @override
+  
+@override
   Future<void> updateData({
     required String path,
-    required String id,
     required Map<String, dynamic> data,
+    required String columnName,
+    required dynamic columnValue,
   }) async {
     try {
-      await _supabase.from(path).update(data).eq('id', id);
+      final response = await _supabase
+          .from(path)
+          .update(data)
+          .eq(columnName, columnValue);
+
+      final error = response.error;
+      if (error != null) {
+        throw CustomException(message: error.message);
+      }
     } catch (e) {
-      log(e.toString());
-      throw CustomException(message: e.toString());
+      log('Update failed: $e');
+      throw CustomException(message: 'حدث خطأ أثناء تحديث البيانات');
     }
   }
+
 
   @override
   Future<void> deleteData({

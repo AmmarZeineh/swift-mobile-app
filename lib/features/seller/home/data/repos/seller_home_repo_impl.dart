@@ -76,4 +76,23 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<ServerFailure, void>> editProductDetails(
+    String columnName,
+    String columnValue,
+    Map<String, dynamic> newData,
+  ) async {
+    try {
+      await _dataBaseService.updateData(
+        data: newData,
+        path: BackendEndpoints.products,
+        columnName: columnName,
+        columnValue: columnValue,
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

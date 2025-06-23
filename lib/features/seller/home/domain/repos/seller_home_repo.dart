@@ -11,4 +11,10 @@ abstract class SellerHomeRepo {
 
   Future<Either<ServerFailure, List<ProductAttributeEntity>>>
   getProductAttributes(int categoryId);
+
+  Future<Either<ServerFailure, void>> editProductDetails(
+    String columnName,
+    String columnValue,
+    Map<String, dynamic> newData,
+  );
 }

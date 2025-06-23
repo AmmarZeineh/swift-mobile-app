@@ -1,8 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift_mobile_app/core/helper_functions/show_dialog.dart';
+import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
+import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_row.dart';
 
 class SellerProductDetailsViewBody extends StatefulWidget {
   const SellerProductDetailsViewBody({super.key, required this.productEntity});
@@ -44,18 +49,93 @@ class _SellerProductDetailsViewBodyState
               ),
             ),
             SizedBox(height: 24),
-            ProductDetailsRow(title: 'الاسم', value: widget.productEntity.name),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: CachedNetworkImage(
+                imageUrl: widget.productEntity.image[0],
+              ),
+            ),
+            SizedBox(height: 16),
+            ProductDetailsRow(
+              title: 'الاسم',
+              value: widget.productEntity.name,
+              onPressed: () {
+                showEditDialog(context, 'الاسم', widget.productEntity.name, (
+                  value,
+                ) async {
+                  await getIt.get<SellerHomeRepo>().editProductDetails(
+                    'id',
+                    widget.productEntity.id.toString(),
+                    {'name': value},
+                  );
+                  if (context.mounted) {
+                    Navigator.pop(context, true);
+                  }
+                });
+              },
+            ),
             ProductDetailsRow(
               title: 'الوصف',
               value: widget.productEntity.description,
+              onPressed: () {
+                showEditDialog(
+                  context,
+                  'الوصف',
+                  widget.productEntity.description,
+                  (value) async {
+                    await getIt.get<SellerHomeRepo>().editProductDetails(
+                      'id',
+                      widget.productEntity.id.toString(),
+                      {'description': value},
+                    );
+                    if (context.mounted) {
+                      Navigator.pop(context, true);
+                    }
+                  },
+                );
+              },
             ),
             ProductDetailsRow(
               title: 'السعر',
               value: '${widget.productEntity.price.toString()}\$',
+              onPressed: () {
+                showEditDialog(
+                  context,
+                  'السعر',
+                  widget.productEntity.price.toString(),
+                  (value) async {
+                    await getIt.get<SellerHomeRepo>().editProductDetails(
+                      'id',
+                      widget.productEntity.id.toString(),
+                      {'price': value},
+                    );
+                    if (context.mounted) {
+                      Navigator.pop(context, true);
+                    }
+                  },
+                );
+              },
             ),
             ProductDetailsRow(
               title: 'العدد في المخزون',
               value: widget.productEntity.stock.toString(),
+              onPressed: () {
+                showEditDialog(
+                  context,
+                  'العدد في المخزون',
+                  widget.productEntity.stock.toString(),
+                  (value) async {
+                    await getIt.get<SellerHomeRepo>().editProductDetails(
+                      'id',
+                      widget.productEntity.id.toString(),
+                      {'stock': value},
+                    );
+                    if (context.mounted) {
+                      Navigator.pop(context, true);
+                    }
+                  },
+                );
+              },
             ),
 
             // عرض الـ attributes بناءً على state الـ cubit
@@ -71,6 +151,7 @@ class _SellerProductDetailsViewBodyState
                           value: attributeWithValues.values
                               .map((v) => v.value)
                               .join(', '),
+                          onPressed: () {},
                         ),
                       ),
                     ],
@@ -82,27 +163,6 @@ class _SellerProductDetailsViewBodyState
           ],
         ),
       ),
-    );
-  }
-}
-
-class ProductDetailsRow extends StatelessWidget {
-  const ProductDetailsRow({
-    super.key,
-    required this.title,
-    required this.value,
-  });
-  final String title;
-  final String value;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-        Spacer(),
-        Text(value, style: AppTextStyles.w400_16.copyWith(color: Colors.grey)),
-        Text(' :$title', style: AppTextStyles.w400_16),
-      ],
     );
   }
 }
