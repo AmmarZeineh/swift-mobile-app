@@ -20,7 +20,7 @@ abstract class DataBaseService {
 
   Future<void> deleteData({
     required String path,
-    required String id,
-    required String column,
+    required String columnName,
+    required dynamic columnValue,
   });
 }

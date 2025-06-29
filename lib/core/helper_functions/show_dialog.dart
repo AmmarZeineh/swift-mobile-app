@@ -20,7 +20,7 @@ void showEditDialog(
         (context) => Directionality(
           textDirection: TextDirection.rtl, // <<< المهم
           child: AlertDialog(
-            title: Text("تعديل $title"),
+            title: Text(title),
             content: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: TextFormField(
@@ -40,8 +40,9 @@ void showEditDialog(
                   context.read<FetchProductsCubit>().fetchProducts(
                     context.read<UserCubit>().currentUser!.sellerId,
                   );
-                  Navigator.pop(context,true);
-                 
+                  Navigator.pop(context, true);
+                  Navigator.pop(context, true);
+                  Navigator.pop(context, true);
                 },
                 padding: EdgeInsets.all(8),
               ),

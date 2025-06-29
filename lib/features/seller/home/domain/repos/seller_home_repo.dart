@@ -17,4 +17,10 @@ abstract class SellerHomeRepo {
     String columnValue,
     Map<String, dynamic> newData,
   );
+
+  editAttributeValue(String string, int attributeId, int valueId, String newValue) {}
+
+  deleteAttributeValue(String string, int attributeId, int valueId) {}
+
+  addAttributeValue(String string, int attributeId, String newValue) {}
 }

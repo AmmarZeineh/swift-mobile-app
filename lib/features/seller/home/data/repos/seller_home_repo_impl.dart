@@ -16,6 +16,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
   final DataBaseService _dataBaseService;
 
   SellerHomeRepoImpl(this._dataBaseService);
+
   @override
   Future<Either<Failure, List<ProductEntity>>> getProducts(int id) async {
     try {
@@ -41,7 +42,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
     try {
       List<ProductAttributeValueEntity> attributeValues = [];
       var data = await _dataBaseService.getData(
-        path: BackendEndpoints.atrributesalues,
+        path: BackendEndpoints.atrributesValues,
         columnName: "product_id",
         columnValue: productId.toString(),
       );
@@ -89,6 +90,65 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
         path: BackendEndpoints.products,
         columnName: columnName,
         columnValue: columnValue,
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> editAttributeValue(
+    String productId,
+    int attributeId,
+    int valueId,
+    String newValue,
+  ) async {
+    try {
+      await _dataBaseService.updateData(
+        data: {'value': newValue},
+        path: BackendEndpoints.atrributesValues,
+        columnName: 'id',
+        columnValue: valueId.toString(),
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> addAttributeValue(
+    String productId,
+    int attributeId,
+    String newValue,
+  ) async {
+    try {
+      await _dataBaseService.addData(
+        data: {
+          'product_id': productId,
+          'attribute_id': attributeId,
+          'value': newValue,
+        },
+        path: BackendEndpoints.atrributesValues,
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> deleteAttributeValue(
+    String productId,
+    int attributeId,
+    int valueId,
+  ) async {
+    try {
+      await _dataBaseService.deleteData(
+        path: BackendEndpoints.atrributesValues,
+        columnName: 'id',
+        columnValue: valueId.toString(),
       );
       return Right(null);
     } catch (e) {

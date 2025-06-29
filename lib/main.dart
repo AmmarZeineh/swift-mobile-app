@@ -16,6 +16,7 @@ import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.d
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
 
 void main() async {
@@ -45,6 +46,10 @@ void main() async {
             BlocProvider(
               create:
                   (context) => FetchProductsCubit(getIt.get<SellerHomeRepo>()),
+            ),
+            BlocProvider(
+              create:
+                  (context) => ProductAttributesCubit(getIt.get<SellerHomeRepo>()),
             ),
           ],
           child: const SwiftMobileApp(),

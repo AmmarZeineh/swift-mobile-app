@@ -7,6 +7,7 @@ import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_attribute_values_section.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_row.dart';
 
 class SellerProductDetailsViewBody extends StatefulWidget {
@@ -20,10 +21,15 @@ class SellerProductDetailsViewBody extends StatefulWidget {
 
 class _SellerProductDetailsViewBodyState
     extends State<SellerProductDetailsViewBody> {
+  // إنشاء متغير محلي للمنتج
+  late ProductEntity currentProduct;
+
   @override
   void initState() {
     super.initState();
-    // نادي على الـ cubit مرة واحدة فقط
+    // نسخ البيانات إلى المتغير المحلي
+    currentProduct = widget.productEntity;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProductAttributesCubit>().fetchAttributesWithValues(
         widget.productEntity.categoryId,
@@ -51,24 +57,31 @@ class _SellerProductDetailsViewBodyState
             SizedBox(height: 24),
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: CachedNetworkImage(
-                imageUrl: widget.productEntity.image[0],
-              ),
+              child: CachedNetworkImage(imageUrl: currentProduct.image[0]),
             ),
             SizedBox(height: 16),
             ProductDetailsRow(
               title: 'الاسم',
-              value: widget.productEntity.name,
+              value: currentProduct.name,
               onPressed: () {
-                showEditDialog(context, 'الاسم', widget.productEntity.name, (
+                showEditDialog(context, 'الاسم', currentProduct.name, (
                   value,
                 ) async {
                   await getIt.get<SellerHomeRepo>().editProductDetails(
                     'id',
-                    widget.productEntity.id.toString(),
+                    currentProduct.id.toString(),
                     {'name': value},
                   );
                   if (context.mounted) {
+                    // تحديث البيانات المحلية
+                    setState(() {
+                      currentProduct = currentProduct.copyWith(
+                        name: value,
+                        stock: currentProduct.stock,
+                        price: currentProduct.price,
+                        description: currentProduct.description,
+                      );
+                    });
                     Navigator.pop(context, true);
                   }
                 });
@@ -76,40 +89,53 @@ class _SellerProductDetailsViewBodyState
             ),
             ProductDetailsRow(
               title: 'الوصف',
-              value: widget.productEntity.description,
+              value: currentProduct.description,
               onPressed: () {
-                showEditDialog(
-                  context,
-                  'الوصف',
-                  widget.productEntity.description,
-                  (value) async {
-                    await getIt.get<SellerHomeRepo>().editProductDetails(
-                      'id',
-                      widget.productEntity.id.toString(),
-                      {'description': value},
-                    );
-                    if (context.mounted) {
-                      Navigator.pop(context, true);
-                    }
-                  },
-                );
+                showEditDialog(context, 'الوصف', currentProduct.description, (
+                  value,
+                ) async {
+                  await getIt.get<SellerHomeRepo>().editProductDetails(
+                    'id',
+                    currentProduct.id.toString(),
+                    {'description': value},
+                  );
+                  if (context.mounted) {
+                    setState(() {
+                      currentProduct = currentProduct.copyWith(
+                        stock: currentProduct.stock,
+                        price: currentProduct.price,
+                        name: currentProduct.name,
+                        description: value,
+                      );
+                    });
+                    Navigator.pop(context, true);
+                  }
+                });
               },
             ),
             ProductDetailsRow(
               title: 'السعر',
-              value: '${widget.productEntity.price.toString()}\$',
+              value: '${currentProduct.price.toString()}\$',
               onPressed: () {
                 showEditDialog(
                   context,
                   'السعر',
-                  widget.productEntity.price.toString(),
+                  currentProduct.price.toString(),
                   (value) async {
                     await getIt.get<SellerHomeRepo>().editProductDetails(
                       'id',
-                      widget.productEntity.id.toString(),
+                      currentProduct.id.toString(),
                       {'price': value},
                     );
                     if (context.mounted) {
+                      setState(() {
+                        currentProduct = currentProduct.copyWith(
+                          description: currentProduct.description,
+                          stock: currentProduct.stock,
+                          price: double.tryParse(value) ?? currentProduct.price,
+                          name: currentProduct.name,
+                        );
+                      });
                       Navigator.pop(context, true);
                     }
                   },
@@ -118,48 +144,34 @@ class _SellerProductDetailsViewBodyState
             ),
             ProductDetailsRow(
               title: 'العدد في المخزون',
-              value: widget.productEntity.stock.toString(),
+              value: currentProduct.stock.toString(),
               onPressed: () {
                 showEditDialog(
                   context,
                   'العدد في المخزون',
-                  widget.productEntity.stock.toString(),
+                  currentProduct.stock.toString(),
                   (value) async {
                     await getIt.get<SellerHomeRepo>().editProductDetails(
                       'id',
-                      widget.productEntity.id.toString(),
+                      currentProduct.id.toString(),
                       {'stock': value},
                     );
                     if (context.mounted) {
+                      setState(() {
+                        currentProduct = currentProduct.copyWith(
+                          description: currentProduct.description,
+                          price: currentProduct.price,
+                          name: currentProduct.name,
+                          stock: int.tryParse(value) ?? currentProduct.stock,
+                        );
+                      });
                       Navigator.pop(context, true);
                     }
                   },
                 );
               },
             ),
-
-            // عرض الـ attributes بناءً على state الـ cubit
-            BlocBuilder<ProductAttributesCubit, ProductAttributesState>(
-              builder: (context, state) {
-                if (state is ProductAttributesSuccess) {
-                  return Column(
-                    children: [
-                      SizedBox(height: 16),
-                      ...state.data.map(
-                        (attributeWithValues) => ProductDetailsRow(
-                          title: attributeWithValues.attribute.name,
-                          value: attributeWithValues.values
-                              .map((v) => v.value)
-                              .join(', '),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                return SizedBox.shrink();
-              },
-            ),
+            ProductDetailsAttributeValuesSection(currentProduct: currentProduct),
           ],
         ),
       ),

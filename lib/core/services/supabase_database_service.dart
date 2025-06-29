@@ -37,8 +37,8 @@ class SupabaseDatabaseService extends DataBaseService {
       throw CustomException(message: e.toString());
     }
   }
-  
-@override
+
+  @override
   Future<void> updateData({
     required String path,
     required Map<String, dynamic> data,
@@ -61,15 +61,14 @@ class SupabaseDatabaseService extends DataBaseService {
     }
   }
 
-
   @override
   Future<void> deleteData({
     required String path,
-    required String id,
-    required String column,
+    required String columnName,
+    required dynamic columnValue,
   }) async {
     try {
-      await _supabase.from(path).delete().eq(column, id);
+      await _supabase.from(path).delete().eq(columnName, columnValue);
     } catch (e) {
       throw CustomException(message: e.toString());
     }
