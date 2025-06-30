@@ -7,4 +7,5 @@ class BackendEndpoints {
   static const products = 'products';
   static const atrributesValues = 'atrributes_values';
   static const attributes = 'product_attributes';
+  static const reviews = 'reviews';
 }

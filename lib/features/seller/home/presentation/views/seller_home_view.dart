@@ -1,10 +1,7 @@
-// seller_home_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/seller_home_view_body.dart';
 
@@ -14,20 +11,11 @@ class SellerHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FetchProductsCubit>().fetchProducts(
+      context.read<UserCubit>().currentUser!.sellerId,
+    );
     return Scaffold(
-      body: SafeArea(
-        child: BlocProvider(
-          create: (context) {
-            final cubit = FetchProductsCubit(getIt.get<SellerHomeRepo>());
-            // استدعي fetchProducts هنا مرة واحدة فقط
-            cubit.fetchProducts(
-              context.read<UserCubit>().currentUser!.sellerId,
-            );
-            return cubit;
-          },
-          child: SellerHomeViewBody(),
-        ),
-      ),
+      body: SafeArea(child: SellerHomeViewBody()),
       floatingActionButton: CustomElevatedButton(
         title: 'اضافة منتج',
         onPressed: () {},

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:swift_mobile_app/core/helper_functions/error_snack_bar.dart';
+import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
@@ -162,7 +162,7 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       if (image == null) {
-                        errorSnackBar(context, 'يرجى اختيار صورة هوية');
+                        showErrorMessage('يرجى اختيار صورة هوية', context);
                       } else {
                         context.read<SellerSignupCubit>().signupSeller(
                           email!,

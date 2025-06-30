@@ -4,7 +4,7 @@ class ProductEntity extends Equatable {
   final int id;
   final int categoryId;
   final String name;
-  final int price;
+  final num price;
   final String description;
   final List<dynamic> image;
   final int stock;

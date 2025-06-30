@@ -79,7 +79,7 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       });
       await _dataBaseService.addData(
         path: BackendEndpoints.pendingSellers,
-        data: sellerModel.toJson(),
+        data: sellerModel.toJsonSignup(),
       );
       return Right(sellerEntity);
     } catch (e) {

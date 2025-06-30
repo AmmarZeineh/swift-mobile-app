@@ -51,13 +51,14 @@ class SupabaseDatabaseService extends DataBaseService {
           .update(data)
           .eq(columnName, columnValue);
 
-      final error = response.error;
-      if (error != null) {
-        throw CustomException(message: error.message);
+      if (response != null) {
+        throw CustomException(message: response.toString());
       }
     } catch (e) {
       log('Update failed: $e');
-      throw CustomException(message: 'حدث خطأ أثناء تحديث البيانات');
+      throw CustomException(
+        message: 'حدث خطأ أثناء تحديث البيانات ${e.toString()}',
+      );
     }
   }
 

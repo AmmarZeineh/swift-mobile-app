@@ -9,7 +9,9 @@ import 'package:swift_mobile_app/core/models/product_attribute_value_model.dart'
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/features/seller/home/data/models/product_model.dart';
+import 'package:swift_mobile_app/features/seller/home/data/models/review_model.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
+import 'package:swift_mobile_app/features/seller/home/domain/entities/review_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
 
 class SellerHomeRepoImpl implements SellerHomeRepo {
@@ -32,6 +34,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
       }
       return Right(products);
     } catch (e) {
+      log(e.toString());
       return Left(ServerFailure(e.toString()));
     }
   }
@@ -152,6 +155,28 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
       );
       return Right(null);
     } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<ReviewEntity>>> getProductReviews(
+    ProductEntity productEntity,
+  ) async {
+    try {
+      List<ReviewEntity> reviews = [];
+      var data = await _dataBaseService.getData(
+        path: BackendEndpoints.reviews,
+        columnName: "product_id",
+        columnValue: productEntity.id.toString(),
+      );
+      log(data.toString());
+      for (var i = 0; i < data.length; i++) {
+        reviews.add(ReviewModel.fromJson(data[i]).toEntity());
+      }
+      return Right(reviews);
+    } catch (e) {
+      log(e.toString());
       return Left(ServerFailure(e.toString()));
     }
   }

@@ -20,7 +20,6 @@ class ProductDetailsAttributeValuesSection extends StatelessWidget {
         if (state is ProductAttributesSuccess) {
           return Column(
             children: [
-              SizedBox(height: 16),
               ...state.data.map(
                 (attributeWithValues) => ProductDetailsRow(
                   title: attributeWithValues.attribute.name,

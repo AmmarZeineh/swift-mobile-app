@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:swift_mobile_app/core/helper_functions/error_snack_bar.dart';
+import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
@@ -25,10 +25,10 @@ class SellerSignupView extends StatelessWidget {
           child: BlocConsumer<SellerSignupCubit, SellerSignupState>(
             listener: (context, state) {
               if (state is SellerSignupFailure) {
-                errorSnackBar(context, state.errMessage);
+                showErrorMessage(state.errMessage, context);
               }
               if (state is SellerSignupSuccess) {
-                errorSnackBar(context, 'تم تسجيل حسابك بنجاح');
+                showErrorMessage('تم تسجيل حسابك بنجاح', context);
               }
             },
             builder: (context, state) {

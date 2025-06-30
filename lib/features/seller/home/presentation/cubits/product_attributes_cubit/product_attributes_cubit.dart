@@ -12,17 +12,10 @@ class ProductAttributesCubit extends Cubit<ProductAttributesState> {
 
   final SellerHomeRepo repository;
 
-  final Map<String, List<ProductAttributeWithValues>> _cache = {};
   bool _isLoading = false;
 
   Future<void> fetchAttributesWithValues(int categoryId, int productId) async {
     if (_isLoading) return;
-
-    final cacheKey = '${categoryId}_$productId';
-    if (_cache.containsKey(cacheKey)) {
-      emit(ProductAttributesSuccess(_cache[cacheKey]!));
-      return;
-    }
 
     _isLoading = true;
     emit(ProductAttributesLoading());
@@ -81,17 +74,11 @@ class ProductAttributesCubit extends Cubit<ProductAttributesState> {
             );
           }).toList();
 
-      _cache[cacheKey] = mergedData;
-
       _isLoading = false;
       emit(ProductAttributesSuccess(mergedData));
     } catch (e) {
       _isLoading = false;
       emit(ProductAttributesFailure(e.toString()));
     }
-  }
-
-  void clearCache() {
-    _cache.clear();
   }
 }

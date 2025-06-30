@@ -65,4 +65,14 @@ class SellerModel {
     storeAddress: storeAddress,
     image: image,
   );
+
+  toJsonSignup() => {
+    'id': id,
+    'name': userName,
+    'email': email,
+    'phone': phoneNumber,
+    'store_name': storeName,
+    'address': storeAddress,
+    'imageUrl': image,
+  };
 }

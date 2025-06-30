@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_product_details_cubit/cubit/edit_product_details_cubit_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
 
 void deleteAttributeValue(
@@ -11,16 +10,13 @@ void deleteAttributeValue(
   int attributeId,
   ProductEntity productEntity,
 ) async {
-  await getIt.get<SellerHomeRepo>().deleteAttributeValue(
-    productEntity.id.toString(),
-    attributeId,
-    valueId,
+  context.read<EditProductDetailsCubitCubit>().deleteProductAttribute(
+    productEntity,
+    attributeId.toString(),
+    valueId.toString(),
   );
-
-  if (context.mounted) {
-    context.read<ProductAttributesCubit>().fetchAttributesWithValues(
-      productEntity.categoryId,
-      productEntity.id,
-    );
-  }
+  context.read<ProductAttributesCubit>().fetchAttributesWithValues(
+    productEntity.categoryId,
+    productEntity.id,
+  );
 }
