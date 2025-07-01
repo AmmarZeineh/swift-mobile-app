@@ -17,10 +17,33 @@ class ImageRepoImpl implements ImageRepo {
       String url = await storageService.uploadFile(
         image,
         '${BackendEndpoints.images}.$path',
+        BackendEndpoints.images,
       );
       return Right(url);
     } catch (e) {
       log(e.toString());
+      return Left(ServerFailure('Failed to uoload image'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> uploadMultipleImages(
+    List<File> images,
+    String path,
+  ) async {
+    try {
+      List<String> urls = [];
+      for (var i = 0; i < images.length; i++) {
+        String url = await storageService.uploadFile(
+          images[i],
+          '${BackendEndpoints.productImages}.$path',
+          BackendEndpoints.productImages,
+        );
+        urls.add(url);
+      }
+      log(urls[0]);
+      return Right(urls);
+    } catch (e) {
       return Left(ServerFailure('Failed to uoload image'));
     }
   }

@@ -1,6 +1,7 @@
 class BackendEndpoints {
   static const pendingSellers = 'pending_sellers';
   static const images = 'id.images';
+  static const productImages = 'product.images';
   static const rejectedSellers = 'rejected_sellers';
   static const users = 'users';
   static const sellers = 'sellers';
@@ -8,4 +9,5 @@ class BackendEndpoints {
   static const atrributesValues = 'atrributes_values';
   static const attributes = 'product_attributes';
   static const reviews = 'reviews';
+  static const categories = 'categories';
 }

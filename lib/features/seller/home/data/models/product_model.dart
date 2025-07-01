@@ -25,8 +25,18 @@ class ProductModel {
     name: json['name'] as String,
     price: json['price'] as num,
     description: json['description'] as String,
-    image: json['images'] ,
+    image: json['images'],
     stock: json['stock'] as int,
+  );
+
+  factory ProductModel.fromEntity(ProductEntity entity) => ProductModel(
+    id: entity.id,
+    categoryId: entity.categoryId,
+    name: entity.name,
+    price: entity.price,
+    description: entity.description,
+    image: entity.image,
+    stock: entity.stock,
   );
 
   ProductEntity toEntity() => ProductEntity(
@@ -38,4 +48,14 @@ class ProductModel {
     image: image,
     stock: stock,
   );
+
+  toJson(int sellerId) => {
+    'category_id': categoryId,
+    'name': name,
+    'price': price,
+    'description': description,
+    'images': image,
+    'stock': stock,
+    'seller_id': sellerId,
+  };
 }

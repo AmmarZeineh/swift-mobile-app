@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/product_card_widget.dart';
@@ -20,7 +21,7 @@ class SellerHomeViewBody extends StatelessWidget {
               SizedBox(height: 8),
               Text('منتجاتي', style: AppTextStyles.w400_18),
               SizedBox(
-                height: 500,
+                height: 732.h,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
@@ -29,7 +30,9 @@ class SellerHomeViewBody extends StatelessWidget {
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 5 / 7.2,
+                      childAspectRatio: 5.w / 7.3.h,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
                     ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {

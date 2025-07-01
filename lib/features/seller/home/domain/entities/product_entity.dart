@@ -27,6 +27,7 @@ class ProductEntity extends Equatable {
     required String description,
     required num price,
     required int stock,
+    List<dynamic>? images,
   }) {
     return ProductEntity(
       id: id,
@@ -34,7 +35,7 @@ class ProductEntity extends Equatable {
       name: name,
       price: price.toInt(),
       description: description,
-      image: image,
+      image: images ?? image,
       stock: stock,
     );
   }

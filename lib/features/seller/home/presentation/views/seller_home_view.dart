@@ -2,23 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
+import 'package:swift_mobile_app/features/seller/add_product/presentation/views/add_product_view.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/seller_home_view_body.dart';
 
-class SellerHomeView extends StatelessWidget {
+class SellerHomeView extends StatefulWidget {
   const SellerHomeView({super.key});
   static const routeName = 'seller-home-view';
 
   @override
-  Widget build(BuildContext context) {
+  State<SellerHomeView> createState() => _SellerHomeViewState();
+}
+
+class _SellerHomeViewState extends State<SellerHomeView> {
+  @override
+  void initState() {
     context.read<FetchProductsCubit>().fetchProducts(
       context.read<UserCubit>().currentUser!.sellerId,
     );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: SellerHomeViewBody()),
       floatingActionButton: CustomElevatedButton(
         title: 'اضافة منتج',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AddProductView.routeName);
+        },
         padding: EdgeInsets.all(16),
       ),
     );

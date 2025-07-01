@@ -7,6 +7,8 @@ import 'package:swift_mobile_app/core/services/storage_service.dart';
 import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/core/services/supabase_database_service.dart';
 import 'package:swift_mobile_app/core/services/supabase_storage_service.dart';
+import 'package:swift_mobile_app/features/seller/add_product/data/repos/add_product_repo_impl.dart';
+import 'package:swift_mobile_app/features/seller/add_product/domain/repos/add_product_repo.dart';
 import 'package:swift_mobile_app/features/seller/auth/data/repos/seller_auth_repo_impl.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/repos/seller_auth_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/data/repos/seller_home_repo_impl.dart';
@@ -31,5 +33,8 @@ void setupLocator() {
   );
   getIt.registerSingleton<SellerHomeRepo>(
     SellerHomeRepoImpl(getIt.get<DataBaseService>()),
+  );
+  getIt.registerSingleton<AddProductRepo>(
+    AddProductRepoImpl(getIt.get<DataBaseService>(),getIt.get<ImageRepo>()),
   );
 }
