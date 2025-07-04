@@ -8,8 +8,10 @@ class ProductEntity extends Equatable {
   final String description;
   final List<dynamic> image;
   final int stock;
+  final bool hasAttributes;
 
   const ProductEntity({
+    required this.hasAttributes,
     required this.id,
     required this.categoryId,
     required this.name,
@@ -37,6 +39,7 @@ class ProductEntity extends Equatable {
       description: description,
       image: images ?? image,
       stock: stock,
+      hasAttributes: hasAttributes,
     );
   }
 }

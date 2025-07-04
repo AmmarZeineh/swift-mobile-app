@@ -15,6 +15,7 @@ import 'package:swift_mobile_app/features/onboarding/presentation/views/onboardi
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/delete_product_cubit/delete_product_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_product_details_cubit/cubit/edit_product_details_cubit_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_product_reviews_cubit/cubit/fetch_product_reviews_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
@@ -48,6 +49,10 @@ void main() async {
             BlocProvider(
               create:
                   (context) => FetchProductsCubit(getIt.get<SellerHomeRepo>()),
+            ),
+            BlocProvider(
+              create:
+                  (context) => DeleteProductCubit(getIt.get<SellerHomeRepo>()),
             ),
             BlocProvider(
               create:

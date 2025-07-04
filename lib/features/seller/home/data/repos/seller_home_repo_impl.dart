@@ -30,6 +30,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
       log(result.toString());
       List<ProductEntity> products = [];
       for (var i = 0; i < result.length; i++) {
+        log(result.toString());
         products.add(ProductModel.fromJson(result[i]).toEntity());
       }
       return Right(products);
@@ -175,6 +176,31 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
         reviews.add(ReviewModel.fromJson(data[i]).toEntity());
       }
       return Right(reviews);
+    } catch (e) {
+      log(e.toString());
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteProduct(int id) async {
+    try {
+      await _dataBaseService.deleteData(
+        path: BackendEndpoints.atrributesValues,
+        columnName: 'product_id',
+        columnValue: id.toString(),
+      );
+      await _dataBaseService.deleteData(
+        path: BackendEndpoints.reviews,
+        columnName: 'product_id',
+        columnValue: id.toString(),
+      );
+      await _dataBaseService.deleteData(
+        path: BackendEndpoints.products,
+        columnName: 'id',
+        columnValue: id.toString(),
+      );
+      return Right(null);
     } catch (e) {
       log(e.toString());
       return Left(ServerFailure(e.toString()));

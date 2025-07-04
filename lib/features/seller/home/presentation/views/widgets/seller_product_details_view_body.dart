@@ -1,13 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_edit_dialog.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
+import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
+import 'package:swift_mobile_app/core/widgets/images_page_view_builder.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/delete_product_cubit/delete_product_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_product_details_cubit/cubit/edit_product_details_cubit_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_product_reviews_cubit/cubit/fetch_product_reviews_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_attribute_values_section.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_row.dart';
@@ -106,11 +113,11 @@ class _SellerProductDetailsViewBodyState
                 ),
               ),
               SizedBox(height: 24),
-
-              // الصورة والاسم (يظهران دائماً)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: CachedNetworkImage(imageUrl: currentProduct.image[0]),
+              SizedBox(
+                height: 350.h,
+                child: ImagesPageViewBuilder(
+                  productEntity: widget.productEntity,
+                ),
               ),
               SizedBox(height: 16),
 
@@ -260,6 +267,56 @@ class _SellerProductDetailsViewBodyState
                   }
                   return ProductReviewsWidget(reviews: []);
                 },
+              ),
+
+              SizedBox(height: 16),
+              CustomElevatedButton(
+                title: 'حذف المنتج',
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: AlertDialog(
+                          title: Text('تأكيد الحذف'),
+                          content: Text('هل أنت متأكد من حذف هذا المنتج؟'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('إلغاء'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await context
+                                    .read<DeleteProductCubit>()
+                                    .deleteProduct(currentProduct.id);
+                                await context
+                                    .read<FetchProductsCubit>()
+                                    .fetchProducts(
+                                      context
+                                          .read<UserCubit>()
+                                          .currentUser!
+                                          .sellerId,
+                                    );
+                                showSuccessMessage('تم حذف المنتج', context);
+                                Navigator.pop(context, true);
+                                Navigator.pop(context, true);
+                              },
+                              child: Text(
+                                'حذف',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                padding: EdgeInsets.all(8),
               ),
             ],
           ),

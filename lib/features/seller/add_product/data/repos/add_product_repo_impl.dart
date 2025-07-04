@@ -52,7 +52,7 @@ class AddProductRepoImpl implements AddProductRepo {
         },
         (r) {
           for (var i = 0; i < r.length; i++) {
-            urls.add(r[0]);
+            urls.add(r[i]);
           }
         },
       );

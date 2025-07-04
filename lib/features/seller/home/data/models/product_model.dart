@@ -8,8 +8,10 @@ class ProductModel {
   final String description;
   final List<dynamic> image;
   final int stock;
+  final bool hasAttributes;
 
   ProductModel({
+    required this.hasAttributes,
     required this.id,
     required this.categoryId,
     required this.name,
@@ -27,9 +29,11 @@ class ProductModel {
     description: json['description'] as String,
     image: json['images'],
     stock: json['stock'] as int,
+    hasAttributes: json['hasAttributes'] as bool,
   );
 
   factory ProductModel.fromEntity(ProductEntity entity) => ProductModel(
+    hasAttributes: entity.hasAttributes,
     id: entity.id,
     categoryId: entity.categoryId,
     name: entity.name,
@@ -41,6 +45,7 @@ class ProductModel {
 
   ProductEntity toEntity() => ProductEntity(
     id: id,
+    hasAttributes: hasAttributes,
     categoryId: categoryId,
     name: name,
     price: price,
@@ -48,7 +53,6 @@ class ProductModel {
     image: image,
     stock: stock,
   );
-
   toJson(int sellerId) => {
     'category_id': categoryId,
     'name': name,

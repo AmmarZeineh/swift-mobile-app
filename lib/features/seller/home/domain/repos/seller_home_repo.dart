@@ -7,6 +7,7 @@ import 'package:swift_mobile_app/features/seller/home/domain/entities/review_ent
 
 abstract class SellerHomeRepo {
   Future<Either<Failure, List<ProductEntity>>> getProducts(int id);
+  Future<Either<Failure, void>> deleteProduct(int id);
   Future<Either<ServerFailure, List<ProductAttributeValueEntity>>>
   getProductAttributeValues(int productId);
 
@@ -38,5 +39,7 @@ abstract class SellerHomeRepo {
     String newValue,
   );
 
-  Future<Either<ServerFailure, List<ReviewEntity>>> getProductReviews(ProductEntity productEntity);
+  Future<Either<ServerFailure, List<ReviewEntity>>> getProductReviews(
+    ProductEntity productEntity,
+  );
 }
