@@ -8,6 +8,7 @@ import 'package:swift_mobile_app/app_keys.dart';
 import 'package:swift_mobile_app/constants.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/on_generate_routes.dart';
+import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/services/custom_bloc_observer.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart';
@@ -77,7 +78,10 @@ void main() async {
             ),
             BlocProvider(
               create:
-                  (context) => DeleteProductCubit(getIt.get<SellerHomeRepo>()),
+                  (context) => DeleteProductCubit(
+                    getIt.get<SellerHomeRepo>(),
+                    getIt.get<ImageRepo>(),
+                  ),
             ),
             BlocProvider(
               create:

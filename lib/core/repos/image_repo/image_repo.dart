@@ -8,6 +8,6 @@ abstract class ImageRepo {
   Future<Either<Failure, List<String>>> uploadMultipleImages(
     List<File> images,
     String path,
-    
   );
+  Future<Either<Failure, void>> deleteImages(List<String> urls, String path);
 }

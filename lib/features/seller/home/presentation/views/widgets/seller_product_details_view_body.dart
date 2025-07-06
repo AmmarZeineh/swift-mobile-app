@@ -292,6 +292,14 @@ class _SellerProductDetailsViewBodyState
                               onPressed: () async {
                                 await context
                                     .read<DeleteProductCubit>()
+                                    .deleteProductImage(
+                                      extractProductImagePaths(
+                                        widget.productEntity.image
+                                            ,
+                                      ),
+                                    );
+                                await context
+                                    .read<DeleteProductCubit>()
                                     .deleteProduct(currentProduct.id);
                                 await context
                                     .read<FetchProductsCubit>()
@@ -324,4 +332,30 @@ class _SellerProductDetailsViewBodyState
       ),
     );
   }
+}
+
+List<String> extractProductImagePaths(List<dynamic> fullUrls) {
+  List<String> extractedPaths = [];
+
+  for (String urlString in fullUrls) {
+    try {
+      Uri uri = Uri.parse(urlString);
+      String path = uri.path;
+
+      // البحث عن النمط في المسار
+      if (path.contains('/product.images.')) {
+        int startIndex =
+            path.indexOf('/product.images.') + 1; // +1 لتجاهل الـ /
+        if (startIndex > 0 && startIndex < path.length) {
+          String extracted = path.substring(startIndex);
+          extractedPaths.add(extracted);
+        }
+      }
+    } catch (e) {
+      print('خطأ في تحليل الرابط: $urlString');
+      continue;
+    }
+  }
+
+  return extractedPaths;
 }

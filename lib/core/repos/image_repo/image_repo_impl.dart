@@ -47,4 +47,19 @@ class ImageRepoImpl implements ImageRepo {
       return Left(ServerFailure('Failed to uoload image'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteImages(
+    List<String> urls,
+    String path,
+  ) async {
+    try {
+      for (var i = 0; i < urls.length; i++) {
+        storageService.deleteFile(urls[i], BackendEndpoints.productImages);
+      }
+      return Right(null);
+    } catch (e) {
+      return Left(ServerFailure('Failed to delete image'));
+    }
+  }
 }
