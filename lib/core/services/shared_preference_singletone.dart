@@ -22,4 +22,8 @@ class Prefs {
   static getString(String key) {
     return _instance.getString(key) ?? '';
   }
+
+  static remove(String key) async {
+    await _instance.remove(key);
+  }
 }

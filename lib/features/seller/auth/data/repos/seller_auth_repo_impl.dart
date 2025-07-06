@@ -167,4 +167,15 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      _supabaseAuthService.signOut();
+      return Right(null);
+    } catch (e) {
+      log(e.toString());
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

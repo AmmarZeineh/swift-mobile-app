@@ -28,7 +28,7 @@ class SellerSignupView extends StatelessWidget {
                 showErrorMessage(state.errMessage, context);
               }
               if (state is SellerSignupSuccess) {
-                showErrorMessage('تم تسجيل حسابك بنجاح', context);
+                showSuccessMessage('تم تسجيل حسابك بنجاح', context);
               }
             },
             builder: (context, state) {

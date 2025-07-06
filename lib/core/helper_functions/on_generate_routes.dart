@@ -7,6 +7,7 @@ import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_product_details_view.dart';
+import 'package:swift_mobile_app/features/seller/profile/presentation/views/seller_profile_view.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -14,7 +15,7 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const OnboardingView());
     case ClientHomeView.routeName:
       return MaterialPageRoute(builder: (_) => const ClientHomeView());
-    case SellerLoginView.routName:
+    case SellerLoginView.routeName:
       return MaterialPageRoute(builder: (_) => const SellerLoginView());
     case SellerProductDetailsView.routeName:
       return MaterialPageRoute(
@@ -24,7 +25,9 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
             ),
       );
     case AddProductView.routeName:
-      return MaterialPageRoute(builder: (_) => const AddProductView());  
+      return MaterialPageRoute(builder: (_) => const AddProductView());
+    case SellerProfileView.routeName:
+      return MaterialPageRoute(builder: (_) => const SellerProfileView());
     case SellerHomeView.routeName:
       return MaterialPageRoute(builder: (_) => const SellerHomeView());
     case SellerSignupView.routeName:

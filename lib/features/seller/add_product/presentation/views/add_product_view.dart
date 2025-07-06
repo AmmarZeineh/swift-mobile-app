@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/features/seller/add_product/domain/repos/add_product_repo.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/cubits/add_product_cubit/add_product_cubit.dart';
+// ignore: unused_import
 import 'package:swift_mobile_app/features/seller/add_product/presentation/cubits/fetch_categories_cubit/fetch_categories_cubit.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/widgets/add_product_view_body.dart';
 
@@ -17,11 +18,6 @@ class AddProductView extends StatelessWidget {
         body: SafeArea(
           child: MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create:
-                    (context) =>
-                        FetchCategoriesCubit(getIt.get<AddProductRepo>()),
-              ),
               BlocProvider(
                 create:
                     (context) => AddProductCubit(getIt.get<AddProductRepo>()),

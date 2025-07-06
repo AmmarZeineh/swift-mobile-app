@@ -25,4 +25,6 @@ abstract class SellerAuthRepo {
     required String password,
     required BuildContext context,
   });
+
+  Future<Either<Failure, void>> logout();
 }

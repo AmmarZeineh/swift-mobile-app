@@ -13,6 +13,8 @@ import 'package:swift_mobile_app/features/seller/auth/data/repos/seller_auth_rep
 import 'package:swift_mobile_app/features/seller/auth/domain/repos/seller_auth_repo.dart';
 import 'package:swift_mobile_app/features/seller/home/data/repos/seller_home_repo_impl.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
+import 'package:swift_mobile_app/features/seller/profile/data/repos/seller_profile_repo_impl.dart';
+import 'package:swift_mobile_app/features/seller/profile/domain/repos/seller_profile_repo.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -35,6 +37,9 @@ void setupLocator() {
     SellerHomeRepoImpl(getIt.get<DataBaseService>()),
   );
   getIt.registerSingleton<AddProductRepo>(
-    AddProductRepoImpl(getIt.get<DataBaseService>(),getIt.get<ImageRepo>()),
+    AddProductRepoImpl(getIt.get<DataBaseService>(), getIt.get<ImageRepo>()),
+  );
+  getIt.registerSingleton<SellerProfileRepo>(
+    SellerProfileRepoImpl(getIt.get<DataBaseService>()),
   );
 }

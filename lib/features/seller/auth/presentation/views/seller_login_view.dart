@@ -10,7 +10,7 @@ import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_
 
 class SellerLoginView extends StatelessWidget {
   const SellerLoginView({super.key});
-  static const routName = 'seller-login-view';
+  static const routeName = 'seller-login-view';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,11 @@ class SellerLoginView extends StatelessWidget {
                 showErrorMessage(state.errMessage, context);
               }
               if (state is SellerLoginSuccess) {
-                Navigator.pushNamed(context, SellerHomeView.routeName);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  SellerHomeView.routeName,
+                  (route) => false,
+                );
               }
             },
             builder: (context, state) {

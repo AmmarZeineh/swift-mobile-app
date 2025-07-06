@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
-import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
+import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/add_product_view.dart';
-import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/seller_home_view_body.dart';
+import 'package:swift_mobile_app/features/seller/profile/presentation/views/seller_profile_view.dart';
 
 class SellerHomeView extends StatefulWidget {
   const SellerHomeView({super.key});
@@ -15,25 +13,49 @@ class SellerHomeView extends StatefulWidget {
 }
 
 class _SellerHomeViewState extends State<SellerHomeView> {
+  int selectedIndex = 0;
+
+  final List<Widget> screens = [
+    SellerHomeView(),
+    AddProductView(),
+    SellerProfileView(),
+  ];
   @override
   void initState() {
-    context.read<FetchProductsCubit>().fetchProducts(
-      context.read<UserCubit>().currentUser!.sellerId,
-    );
+    
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: SellerHomeViewBody()),
-      floatingActionButton: CustomElevatedButton(
-        title: 'اضافة منتج',
-        onPressed: () {
-          Navigator.pushNamed(context, AddProductView.routeName);
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
+        selectedItemColor: AppColors.primaryColor,
+        unselectedItemColor: AppColors.secondaryColor,
+        currentIndex: selectedIndex,
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
         },
-        padding: EdgeInsets.all(16),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'الصفحة الرئيسية',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'اضافة منتج'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'الملف الشخصي',
+          ),
+        ],
       ),
+      body:
+          selectedIndex == 0
+              ? SafeArea(child: SellerHomeViewBody())
+              : screens[selectedIndex],
     );
   }
 }

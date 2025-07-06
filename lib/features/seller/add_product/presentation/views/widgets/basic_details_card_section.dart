@@ -141,7 +141,6 @@ class _BasicProductDetailsCardSectionState
         }
         if (state is AddProductSuccess) {
           showSuccessMessage('تم رفع المنتج بنجاح', context);
-          Navigator.pop(context);
         }
       },
       builder: (context, state) {

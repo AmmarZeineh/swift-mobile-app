@@ -1,4 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.INTERNET"/>
+
+<!-- الوصول للكاميرا -->
+<uses-permission android:name="android.permission.CAMERA"/>
+
+<!-- قراءة من المعرض / ملفات -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:label="Swift"
         android:name="${applicationName}"

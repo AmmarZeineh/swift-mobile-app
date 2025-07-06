@@ -19,4 +19,25 @@ class SellerEntity {
     required this.storeName,
     required this.storeAddress,
   });
+
+  copyWith({
+    String? id,
+    int? sellerId,
+    String? userName,
+    String? email,
+    String? phoneNumber,
+    String? storeName,
+    String? storeAddress,
+    String? image,
+  }) =>
+      SellerEntity(
+        id: id ?? this.id,
+        sellerId: sellerId ?? this.sellerId,
+        userName: userName ?? this.userName,
+        email: email ?? this.email,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        storeName: storeName ?? this.storeName,
+        storeAddress: storeAddress ?? this.storeAddress,
+        image: image ?? this.image,
+      );
 }

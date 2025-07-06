@@ -6,7 +6,7 @@ import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/utils/app_images.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/client_home_view.dart';
-import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_signup_view.dart';
+import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 
 class OnboardingViewBody extends StatelessWidget {
   const OnboardingViewBody({super.key});
@@ -56,7 +56,7 @@ class OnboardingViewBody extends StatelessWidget {
                 style: AppTextStyles.w400_18.copyWith(color: Color(0xFF808080)),
                 textAlign: TextAlign.end,
               ),
-              SizedBox(height: 325.h),
+              Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: CustomElevatedButton(
@@ -65,7 +65,7 @@ class OnboardingViewBody extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacementNamed(
                       context,
-                      SellerSignupView.routeName,
+                      SellerLoginView.routeName,
                     );
                   },
                 ),
@@ -84,6 +84,7 @@ class OnboardingViewBody extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(height: 16),
             ],
           ),
         ),
