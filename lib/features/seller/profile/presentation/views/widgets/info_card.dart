@@ -52,14 +52,19 @@ class InfoCard extends StatelessWidget {
             ),
             child: GestureDetector(onTap: onTap, child: Icon(Icons.edit)),
           ),
-          Spacer(),
+          SizedBox(width: 15),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(':$title', style: AppTextStyles.w300_12),
                 SizedBox(height: 4.h),
-                Text(value, style: AppTextStyles.w600_16),
+                Text(
+                  value,
+                  style: AppTextStyles.w600_16,
+                  overflow: TextOverflow.ellipsis,
+                  textDirection: TextDirection.rtl,
+                ),
               ],
             ),
           ),
