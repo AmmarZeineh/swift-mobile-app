@@ -8,6 +8,7 @@ import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_edit_dialog.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
+import 'package:swift_mobile_app/core/utils/image_path_extractor.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/widgets/images_page_view_builder.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
@@ -268,7 +269,6 @@ class _SellerProductDetailsViewBodyState
                   return ProductReviewsWidget(reviews: []);
                 },
               ),
-
               SizedBox(height: 16),
               CustomElevatedButton(
                 title: 'حذف المنتج',
@@ -293,9 +293,8 @@ class _SellerProductDetailsViewBodyState
                                 await context
                                     .read<DeleteProductCubit>()
                                     .deleteProductImage(
-                                      extractProductImagePaths(
-                                        widget.productEntity.image
-                                            ,
+                                      ImagePathExtractor.extractProductImagePaths(
+                                        widget.productEntity.image,
                                       ),
                                     );
                                 await context
@@ -332,30 +331,4 @@ class _SellerProductDetailsViewBodyState
       ),
     );
   }
-}
-
-List<String> extractProductImagePaths(List<dynamic> fullUrls) {
-  List<String> extractedPaths = [];
-
-  for (String urlString in fullUrls) {
-    try {
-      Uri uri = Uri.parse(urlString);
-      String path = uri.path;
-
-      // البحث عن النمط في المسار
-      if (path.contains('/product.images.')) {
-        int startIndex =
-            path.indexOf('/product.images.') + 1; // +1 لتجاهل الـ /
-        if (startIndex > 0 && startIndex < path.length) {
-          String extracted = path.substring(startIndex);
-          extractedPaths.add(extracted);
-        }
-      }
-    } catch (e) {
-      print('خطأ في تحليل الرابط: $urlString');
-      continue;
-    }
-  }
-
-  return extractedPaths;
 }
