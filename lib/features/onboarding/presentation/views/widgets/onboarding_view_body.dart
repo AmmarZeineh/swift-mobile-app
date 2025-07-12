@@ -63,7 +63,7 @@ class OnboardingViewBody extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
                   title: 'انا بائع',
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    Navigator.pushNamed(
                       context,
                       SellerLoginView.routeName,
                     );
@@ -77,7 +77,7 @@ class OnboardingViewBody extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
                   title: 'انا مشتري',
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
+                    Navigator.pushNamed(
                       context,
                       ClientHomeView.routeName,
                     );

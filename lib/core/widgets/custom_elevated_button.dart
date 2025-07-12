@@ -7,7 +7,7 @@ class CustomElevatedButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
-    required this.padding,
+    this.padding = EdgeInsets.zero,
   });
   final String title;
   final void Function() onPressed;
