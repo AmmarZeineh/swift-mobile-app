@@ -5,5 +5,9 @@ import 'package:swift_mobile_app/features/client/home/domain/entities/product_en
 
 abstract class HomeRepo {
   Future<Either<Failure, List<CategoryCardEntity>>> fetchCategories();
-   Future<Either<Failure, List<ProductEntity>>> fetchProducts();
+  Future<Either<Failure, List<ProductEntity>>> fetchProducts({int? categoryId,int offset,int limit});
+  Future<Either<Failure, List<ProductEntity>>> searchProducts({
+    required String keyword,
+    int? categoryId,
+  });
 }

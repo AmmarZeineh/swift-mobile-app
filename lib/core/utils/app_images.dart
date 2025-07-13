@@ -19,4 +19,6 @@ class Assets {
   /// Assets for imagesSplash
   /// assets/images/splash.svg
   static const String imagesSearch = "assets/images/ri_search-2-line.png";
+  static const String imagesSwiftLogoIcon23 =
+      "assets/images/swift_logo_icon_23.png";
 }

@@ -24,7 +24,7 @@ class SupabaseDatabaseService extends DataBaseService {
   Future getData({
     required String path,
     String? columnName,
-    String? columnValue,
+    dynamic columnValue,
     Map<String, dynamic>? query,
   }) async {
     try {
@@ -41,25 +41,53 @@ class SupabaseDatabaseService extends DataBaseService {
   @override
   Future<void> updateData({
     required String path,
-    required String id,
     required Map<String, dynamic> data,
+    required String columnName,
+    required dynamic columnValue,
   }) async {
     try {
-      await _supabase.from(path).update(data).eq('id', id);
+      final response = await _supabase
+          .from(path)
+          .update(data)
+          .eq(columnName, columnValue);
+
+      if (response != null) {
+        throw CustomException(message: response.toString());
+      }
     } catch (e) {
-      log(e.toString());
-      throw CustomException(message: e.toString());
+      log('Update failed: $e');
+      throw CustomException(
+        message: 'حدث خطأ أثناء تحديث البيانات ${e.toString()}',
+      );
     }
   }
 
   @override
   Future<void> deleteData({
     required String path,
-    required String id,
-    required String column,
+    required String columnName,
+    required dynamic columnValue,
   }) async {
     try {
-      await _supabase.from(path).delete().eq(column, id);
+      await _supabase.from(path).delete().eq(columnName, columnValue);
+    } catch (e) {
+      throw CustomException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getDataByIds({
+    required String path,
+    required String columnName,
+    required List<dynamic> values,
+  }) async {
+    try {
+      final result = await _supabase
+          .from(path)
+          .select()
+          .inFilter(columnName, values); // 👈 this is the key
+
+      return List<Map<String, dynamic>>.from(result);
     } catch (e) {
       throw CustomException(message: e.toString());
     }

@@ -1,4 +1,3 @@
-import 'package:swift_mobile_app/features/client/product_details/domain/entities/product_attribute_entity.dart';
 
 class ProductAttributeValueEntity {
   final int id;

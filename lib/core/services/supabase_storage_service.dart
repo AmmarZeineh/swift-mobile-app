@@ -1,10 +1,8 @@
 // import 'dart:io';
 
-// import 'package:fannyk/app_keys.dart';
-// import 'package:fannyk/core/services/backend_endpoints.dart';
-// import 'package:fannyk/core/services/storage_service.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:path/path.dart' as b;
+// import 'package:swift_mobile_app/app_keys.dart';
+// import 'package:swift_mobile_app/core/services/storage_service.dart';
 
 // class SupabaseStorageService extends StorageService {
 //   SupabaseClient supabase = SupabaseClient(AppKeys.url, AppKeys.anonKey);

@@ -5,11 +5,13 @@ class ProductModel {
   final int categoryId;
   final String name;
   final String description;
-  final int price;
+  final num price;
   final int stock;
+  final num rating;
   final List<String> image;
-  
+
   ProductModel({
+    required this.rating,
     required this.id,
     required this.categoryId,
     required this.description,
@@ -17,7 +19,6 @@ class ProductModel {
     required this.stock,
     required this.name,
     required this.image,
-   
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -30,7 +31,7 @@ class ProductModel {
       description: json["description"],
       price: json['price'],
       stock: json['stock'],
-      
+      rating: json['rating'],
     );
   }
 
@@ -42,6 +43,6 @@ class ProductModel {
     description: description,
     price: price,
     stock: stock,
-   
+    rating: rating,
   );
 }

@@ -1,7 +1,6 @@
 part of 'product_attribute_value_cubit.dart';
 
 @immutable
-@immutable
 sealed class ProductAttributesState {}
 
 final class ProductAttributesInitial extends ProductAttributesState {}

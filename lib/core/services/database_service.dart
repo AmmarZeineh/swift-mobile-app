@@ -7,19 +7,26 @@ abstract class DataBaseService {
   Future<dynamic> getData({
     required String path,
     String? columnName,
-    String? columnValue,
+    dynamic columnValue,
     Map<String, dynamic>? query,
   });
 
   Future<void> updateData({
     required String path,
-    required String id,
     required Map<String, dynamic> data,
+    required String columnName,
+    required dynamic columnValue,
   });
 
   Future<void> deleteData({
     required String path,
-    required String id,
-    required String column,
+    required String columnName,
+    required dynamic columnValue,
+  });
+
+  Future<List<Map<String, dynamic>>> getDataByIds({
+    required String path,
+    required String columnName,
+    required List<dynamic> values,
   });
 }
