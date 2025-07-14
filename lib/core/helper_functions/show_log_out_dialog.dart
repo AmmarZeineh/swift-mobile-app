@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mobile_app/constants.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 
-void showLogoutDialog(BuildContext context) {
+void showLogoutDialog(BuildContext context, String key) {
   var supabaseAuth = getIt.get<SupabaseAuthService>();
   showDialog(
     context: context,
@@ -25,7 +24,7 @@ void showLogoutDialog(BuildContext context) {
             TextButton(
               onPressed: () async {
                 await supabaseAuth.signOut();
-                await Prefs.remove(sellerKey);
+                await Prefs.remove(key);
 
                 if (context.mounted) {
                   Navigator.of(context).pushNamedAndRemoveUntil(

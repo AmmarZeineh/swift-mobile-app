@@ -23,4 +23,10 @@ abstract class DataBaseService {
     required String columnName,
     required dynamic columnValue,
   });
+
+  Future<List<Map<String, dynamic>>> getDataByIds({
+    required String path,
+    required String columnName,
+    required List<dynamic> values,
+  });
 }

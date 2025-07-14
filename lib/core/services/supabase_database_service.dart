@@ -74,4 +74,22 @@ class SupabaseDatabaseService extends DataBaseService {
       throw CustomException(message: e.toString());
     }
   }
+
+  @override
+  Future<List<Map<String, dynamic>>> getDataByIds({
+    required String path,
+    required String columnName,
+    required List<dynamic> values,
+  }) async {
+    try {
+      final result = await _supabase
+          .from(path)
+          .select()
+          .inFilter(columnName, values); // 👈 this is the key
+
+      return List<Map<String, dynamic>>.from(result);
+    } catch (e) {
+      throw CustomException(message: e.toString());
+    }
+  }
 }
