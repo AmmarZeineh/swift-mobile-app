@@ -1,15 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swift_mobile_app/core/entites/review_entity.dart';
+import 'package:swift_mobile_app/core/entities/review_entity.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
+import 'package:swift_mobile_app/core/models/product_model.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/entities/client_entity.dart';
-import 'package:swift_mobile_app/features/client/home/data/models/product_model.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/order/data/models/order_model.dart';
 import 'package:swift_mobile_app/features/client/order/domain/entities/order_entity.dart';
 import 'package:swift_mobile_app/features/client/order/domain/repo/order_repo.dart';
+
+import '../../../../../core/entities/product_entity.dart';
 
 class OrdersRepoImp implements OrdersRepo {
   final SupabaseClient supabaseClient;

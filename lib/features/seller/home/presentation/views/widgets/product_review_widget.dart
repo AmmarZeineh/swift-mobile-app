@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/review_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/review_item_widget.dart';
+
+import '../../../../../../core/entities/review_entity.dart';
 
 class ProductReviewsWidget extends StatefulWidget {
   final List<ReviewEntity> reviews;

@@ -2,15 +2,15 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
+import 'package:swift_mobile_app/core/models/product_model.dart';
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/features/seller/add_product/data/models/category_model.dart';
 import 'package:swift_mobile_app/features/seller/add_product/domain/entities/category_entity.dart';
 import 'package:swift_mobile_app/features/seller/add_product/domain/repos/add_product_repo.dart';
-import 'package:swift_mobile_app/features/seller/home/data/models/product_model.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 
 class AddProductRepoImpl implements AddProductRepo {
   final DataBaseService _dataBaseService;

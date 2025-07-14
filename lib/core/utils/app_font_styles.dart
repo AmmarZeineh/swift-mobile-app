@@ -116,9 +116,4 @@ abstract class AppTextStyles {
     fontSize: 16,
     color: Colors.black,
   );
-   static TextStyle w300_12 = TextStyle(
-    fontWeight: FontWeight.w300,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
 }

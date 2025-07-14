@@ -1,20 +1,20 @@
 part of 'add_product_cubit.dart';
 
-sealed class AddProductState extends Equatable {
+ class AddProductState extends Equatable {
   const AddProductState();
 
   @override
   List<Object> get props => [];
 }
 
-final class AddProductInitial extends AddProductState {}
+ class AddProductInitial extends AddProductState {}
 
-final class AddProductLoading extends AddProductState {}
+ class AddProductLoading extends AddProductState {}
 
-final class AddProductFailure extends AddProductState {
+ class AddProductFailure extends AddProductState {
   final String errMessage;
 
   const AddProductFailure(this.errMessage);
 }
 
-final class AddProductSuccess extends AddProductState {}
+ class AddProductSuccess extends AddProductState {}

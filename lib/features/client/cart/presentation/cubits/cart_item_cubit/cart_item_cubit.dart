@@ -4,7 +4,8 @@ import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/features/client/cart/domain/Entities/cart_entity.dart';
 import 'package:swift_mobile_app/features/client/cart/domain/Entities/cart_item_with_product.dart';
 import 'package:swift_mobile_app/features/client/cart/domain/repos/cart_repo.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 part 'cart_item_state.dart';
 
@@ -76,20 +77,19 @@ List<CartItemWithProductEntity> mergeCartWithProducts({
   // دمج العناصر
   return cartItems
       .where(
-        (cart) => productMap.containsKey(cart.productId),
-      ) // نتأكد المنتج موجود
+    (cart) => productMap.containsKey(cart.productId),
+  ) // نتأكد المنتج موجود
       .map((cart) {
-        final product = productMap[cart.productId]!;
+    final product = productMap[cart.productId]!;
 
-        return CartItemWithProductEntity(
-          id: cart.id,
-          createdAt: cart.createdAt,
-          userId: cart.userId,
-          productId: cart.productId,
-          quantity: cart.quantity,
-          selectedAttriute: cart.selectedAttribute,
-          product: product,
-        );
-      })
-      .toList();
+    return CartItemWithProductEntity(
+      id: cart.id,
+      createdAt: cart.createdAt,
+      userId: cart.userId,
+      productId: cart.productId,
+      quantity: cart.quantity,
+      selectedAttriute: cart.selectedAttribute,
+      product: product,
+    );
+  }).toList();
 }

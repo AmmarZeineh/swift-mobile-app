@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
@@ -7,8 +6,9 @@ import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/features/client/cart/data/models/cart_model.dart';
 import 'package:swift_mobile_app/features/client/cart/domain/Entities/cart_entity.dart';
 import 'package:swift_mobile_app/features/client/cart/domain/repos/cart_repo.dart';
-import 'package:swift_mobile_app/features/client/home/data/models/product_model.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
+
+import '../../../../../core/entities/product_entity.dart';
+import '../../../../../core/models/product_model.dart';
 
 class CartRepoImp implements CartRepo {
   final DataBaseService dataBaseService;
@@ -25,8 +25,9 @@ class CartRepoImp implements CartRepo {
         values: ids,
       );
 
-      final products =
-          data.map((e) => ProductModel.fromJson(e).toEntity()).toList();
+      final products = data
+          .map((e) => ProductModel.fromJson(e).toEntity())
+          .toList();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -85,12 +86,11 @@ class CartRepoImp implements CartRepo {
         throw Exception('السلة فارغة');
       }
 
-      final orderResponse =
-          await Supabase.instance.client
-              .from("orders")
-              .insert({'user_id': userId, 'state': state, 'address': address})
-              .select()
-              .single();
+      final orderResponse = await Supabase.instance.client
+          .from("orders")
+          .insert({'user_id': userId, 'state': state, 'address': address})
+          .select()
+          .single();
 
       final orderId = orderResponse['id'];
 

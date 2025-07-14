@@ -3,16 +3,17 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:swift_mobile_app/core/entities/product_attribute_entity.dart';
 import 'package:swift_mobile_app/core/entities/product_attribute_value_entity.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/models/product_attribute_model.dart';
 import 'package:swift_mobile_app/core/models/product_attribute_value_model.dart';
+import 'package:swift_mobile_app/core/models/product_model.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
-import 'package:swift_mobile_app/features/seller/home/data/models/product_model.dart';
-import 'package:swift_mobile_app/features/seller/home/data/models/review_model.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/review_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
+
+import '../../../../../core/entities/review_entity.dart';
+import '../../../../../core/models/review_model.dart';
 
 class SellerHomeRepoImpl implements SellerHomeRepo {
   final DataBaseService _dataBaseService;
@@ -42,11 +43,11 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
 
   @override
   Future<Either<ServerFailure, List<ProductAttributeValueEntity>>>
-  getProductAttributeValues(int productId) async {
+      getProductAttributeValues(int productId) async {
     try {
       List<ProductAttributeValueEntity> attributeValues = [];
       var data = await _dataBaseService.getData(
-        path: BackendEndpoints.atrributesValues,
+        path: BackendEndpoints.attributesValues,
         columnName: "product_id",
         columnValue: productId.toString(),
       );
@@ -62,7 +63,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
 
   @override
   Future<Either<ServerFailure, List<ProductAttributeEntity>>>
-  getProductAttributes(int categoryId) async {
+      getProductAttributes(int categoryId) async {
     try {
       List<ProductAttributeEntity> productAttributes = [];
       var data = await _dataBaseService.getData(
@@ -111,7 +112,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
     try {
       await _dataBaseService.updateData(
         data: {'value': newValue},
-        path: BackendEndpoints.atrributesValues,
+        path: BackendEndpoints.attributesValues,
         columnName: 'id',
         columnValue: valueId.toString(),
       );
@@ -134,7 +135,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
           'attribute_id': attributeId,
           'value': newValue,
         },
-        path: BackendEndpoints.atrributesValues,
+        path: BackendEndpoints.attributesValues,
       );
       return Right(null);
     } catch (e) {
@@ -150,7 +151,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
   ) async {
     try {
       await _dataBaseService.deleteData(
-        path: BackendEndpoints.atrributesValues,
+        path: BackendEndpoints.attributesValues,
         columnName: 'id',
         columnValue: valueId.toString(),
       );
@@ -186,7 +187,7 @@ class SellerHomeRepoImpl implements SellerHomeRepo {
   Future<Either<Failure, void>> deleteProduct(int id) async {
     try {
       await _dataBaseService.deleteData(
-        path: BackendEndpoints.atrributesValues,
+        path: BackendEndpoints.attributesValues,
         columnName: 'product_id',
         columnValue: id.toString(),
       );

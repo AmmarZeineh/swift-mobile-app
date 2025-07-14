@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swift_mobile_app/core/helper_classes/date_helper.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/review_entity.dart';
+
+import '../../../../../../core/entities/review_entity.dart';
 
 class ReviewItemWidget extends StatelessWidget {
   final ReviewEntity review;

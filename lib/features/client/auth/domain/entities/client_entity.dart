@@ -12,12 +12,12 @@ class ClientEntity {
     required this.phoneNumber,
   });
 
-  ClientEntity copyWith(
-   { String? id,
+  ClientEntity copyWith({
+    String? id,
     String? userName,
     String? email,
-    String? phoneNumber,}
-  ) => ClientEntity(
+    String? phoneNumber,
+  }) => ClientEntity(
     id: id ?? this.id,
     userName: userName ?? this.userName,
     email: email ?? this.email,

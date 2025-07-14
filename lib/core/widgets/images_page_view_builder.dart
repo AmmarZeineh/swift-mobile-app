@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 
 class ImagesPageViewBuilder extends StatefulWidget {
   const ImagesPageViewBuilder({super.key, required this.productEntity});

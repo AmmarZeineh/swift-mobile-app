@@ -1,4 +1,4 @@
-import 'package:swift_mobile_app/core/entites/review_entity.dart';
+import 'package:swift_mobile_app/core/entities/review_entity.dart';
 
 class ReviewModel {
   final int id;

@@ -1,19 +1,19 @@
 part of 'seller_login_cubit.dart';
 
 @immutable
-sealed class SellerLoginState {}
+ class SellerLoginState {}
 
-final class SellerLoginInitial extends SellerLoginState {}
+ class SellerLoginInitial extends SellerLoginState {}
 
-final class SellerLoginLoading extends SellerLoginState {}
+ class SellerLoginLoading extends SellerLoginState {}
 
-final class SellerLoginSuccess extends SellerLoginState {
+ class SellerLoginSuccess extends SellerLoginState {
   final SellerEntity sellerEntity;
 
   SellerLoginSuccess(this.sellerEntity);
 }
 
-final class SellerLoginFailure extends SellerLoginState {
+ class SellerLoginFailure extends SellerLoginState {
   final String errMessage;
 
   SellerLoginFailure(this.errMessage);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
-import 'package:swift_mobile_app/core/entites/review_entity.dart';
+import 'package:swift_mobile_app/core/entities/review_entity.dart';
 import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/features/client/order/domain/entities/order_item_entity.dart';

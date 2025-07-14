@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_add_value_dialog.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_delete_value_dialog.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_edit_single_value.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_product_details_cubit/cubit/edit_product_details_cubit_cubit.dart';
 
 void showEditAttributeDialog(

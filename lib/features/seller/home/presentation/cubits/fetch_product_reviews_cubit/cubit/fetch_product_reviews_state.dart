@@ -1,23 +1,23 @@
 part of 'fetch_product_reviews_cubit.dart';
 
-sealed class FetchProductReviewsState extends Equatable {
+ class FetchProductReviewsState extends Equatable {
   const FetchProductReviewsState();
 
   @override
   List<Object> get props => [];
 }
 
-final class FetchProductReviewsInitial extends FetchProductReviewsState {}
+ class FetchProductReviewsInitial extends FetchProductReviewsState {}
 
-final class FetchProductReviewsLoading extends FetchProductReviewsState {}
+ class FetchProductReviewsLoading extends FetchProductReviewsState {}
 
-final class FetchProductReviewsSuccess extends FetchProductReviewsState {
+ class FetchProductReviewsSuccess extends FetchProductReviewsState {
   final List<ReviewEntity> reviews;
 
   const FetchProductReviewsSuccess(this.reviews);
 }
 
-final class FetchProductReviewsFailure extends FetchProductReviewsState {
+ class FetchProductReviewsFailure extends FetchProductReviewsState {
   final String errMessage;
 
   const FetchProductReviewsFailure(this.errMessage);

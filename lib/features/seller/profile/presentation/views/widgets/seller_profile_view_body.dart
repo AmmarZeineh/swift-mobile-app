@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/constants.dart';
-import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_edit_profile_info_dialog.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_log_out_dialog.dart';
 import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
@@ -15,7 +15,7 @@ import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
-import 'package:swift_mobile_app/features/seller/profile/presentation/cubits/edit_profile_details_cubit/edit_profile_details_cubit.dart';
+import 'package:swift_mobile_app/core/cubits/edit_profile_details_cubit/edit_profile_details_cubit.dart';
 import 'package:swift_mobile_app/features/seller/profile/presentation/views/widgets/info_action_button.dart';
 import 'package:swift_mobile_app/features/seller/profile/presentation/views/widgets/info_card.dart';
 import 'package:swift_mobile_app/features/seller/profile/presentation/views/widgets/profile_info_header.dart';
@@ -132,7 +132,7 @@ class SellerProfileViewBody extends StatelessWidget {
                     icon: Icons.logout,
                     title: 'تسجيل الخروج',
                     onTap: () {
-                      showLogoutDialog(context);
+                      showLogoutDialog(context, sellerKey);
                     },
                     color: Colors.red,
                   ),
@@ -228,7 +228,6 @@ class SellerProfileViewBody extends StatelessWidget {
 
       // بدء عملية التحديث
       await context.read<EditProfileDetailsCubit>().editProfileDetails(
-        sellerEntity: currentSeller,
         newData: {'address': value},
         columnName: 'id',
         columnValue: currentSeller.id,
@@ -277,7 +276,6 @@ class SellerProfileViewBody extends StatelessWidget {
 
       // بدء عملية التحديث
       await context.read<EditProfileDetailsCubit>().editProfileDetails(
-        sellerEntity: currentSeller,
         newData: {'phone': value},
         columnName: 'id',
         columnValue: currentSeller.id,

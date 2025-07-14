@@ -10,7 +10,7 @@ abstract class UserState extends Equatable {
 class UserInitial extends UserState {}
 
 class UserLoaded extends UserState {
-  final ClientEntity user;
+  final dynamic user; // إما ClientEntity أو SellerEntity
 
   const UserLoaded(this.user);
 

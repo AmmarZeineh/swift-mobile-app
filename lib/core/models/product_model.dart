@@ -1,4 +1,5 @@
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
+
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 
 class ProductModel {
   final int id;
@@ -9,8 +10,10 @@ class ProductModel {
   final List<dynamic> image;
   final int stock;
   final bool hasAttributes;
+  final num rating;
 
   ProductModel({
+    required this.rating,
     required this.hasAttributes,
     required this.id,
     required this.categoryId,
@@ -22,6 +25,7 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    rating: json['rating'],
     id: json['id'] as int,
     categoryId: json['category_id'] as int,
     name: json['name'] as String,
@@ -33,6 +37,7 @@ class ProductModel {
   );
 
   factory ProductModel.fromEntity(ProductEntity entity) => ProductModel(
+    rating: entity.rating,
     hasAttributes: entity.hasAttributes,
     id: entity.id,
     categoryId: entity.categoryId,
@@ -52,6 +57,7 @@ class ProductModel {
     description: description,
     image: image,
     stock: stock,
+    rating: rating
   );
   toJson(int sellerId) => {
     'category_id': categoryId,

@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 class ProductImage extends StatefulWidget {
   const ProductImage({super.key, required this.product});

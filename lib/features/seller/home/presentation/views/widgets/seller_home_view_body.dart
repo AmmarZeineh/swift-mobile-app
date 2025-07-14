@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/product_card_widget.dart';
@@ -53,7 +53,7 @@ class SellerHomeViewBody extends StatelessWidget {
                           );
                         }
                       },
-                      child: ProductCard(productEntity: products[index]),
+                      child: SellerProductCard(productEntity: products[index]),
                     );
                   },
                 ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/images_page_view_builder.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 
-class ProductCard extends StatelessWidget {
+class SellerProductCard extends StatelessWidget {
   final ProductEntity productEntity;
-  const ProductCard({super.key, required this.productEntity});
+  const SellerProductCard({super.key, required this.productEntity});
 
   @override
   Widget build(BuildContext context) {

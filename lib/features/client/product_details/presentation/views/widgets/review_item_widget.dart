@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mobile_app/core/entites/review_entity.dart';
+import 'package:swift_mobile_app/core/entities/review_entity.dart';
 import 'package:swift_mobile_app/core/helper_classes/date_helper.dart';
 
 class ReviewItemWidget extends StatelessWidget {

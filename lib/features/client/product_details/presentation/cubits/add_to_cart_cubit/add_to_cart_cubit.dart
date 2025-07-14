@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/product_details/domain/repo/product_details_repo.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 part 'add_to_cart_state.dart';
 

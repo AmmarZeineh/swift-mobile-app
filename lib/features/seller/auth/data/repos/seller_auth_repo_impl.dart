@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift_mobile_app/constants.dart';
-import 'package:swift_mobile_app/core/cubits/user_cubit.dart';
+import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';

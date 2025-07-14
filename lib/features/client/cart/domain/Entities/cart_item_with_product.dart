@@ -1,4 +1,5 @@
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
+
+import '../../../../../core/entities/product_entity.dart';
 
 class CartItemWithProductEntity {
   final int id;

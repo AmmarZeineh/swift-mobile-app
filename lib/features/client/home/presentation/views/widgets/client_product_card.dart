@@ -4,18 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/product_details_view.dart';
 
-class ProductCard extends StatefulWidget {
+import '../../../../../../core/entities/product_entity.dart';
+
+class ClientProductCard extends StatefulWidget {
   final ProductEntity productEntity;
-  const ProductCard({super.key, required this.productEntity});
+  const ClientProductCard({super.key, required this.productEntity});
 
   @override
-  State<ProductCard> createState() => _ProductCardState();
+  State<ClientProductCard> createState() => _ClientProductCardState();
 }
 
-class _ProductCardState extends State<ProductCard> {
+class _ClientProductCardState extends State<ClientProductCard> {
   final PageController _pageController = PageController();
 
   @override

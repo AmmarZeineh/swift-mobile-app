@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:swift_mobile_app/constats.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
@@ -13,6 +12,8 @@ import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/features/client/auth/data/models/client_model.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/entities/client_entity.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/repos/client_auth_repo.dart';
+
+import '../../../../../constants.dart';
 
 class ClientAuthRepoImp implements ClientAuthRepo {
   final SupabaseAuthService _supabaseAuthService;

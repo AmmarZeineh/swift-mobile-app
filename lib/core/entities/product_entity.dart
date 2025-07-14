@@ -8,9 +8,11 @@ class ProductEntity extends Equatable {
   final String description;
   final List<dynamic> image;
   final int stock;
+  final num rating;
   final bool hasAttributes;
 
   const ProductEntity({
+    required this.rating,
     required this.hasAttributes,
     required this.id,
     required this.categoryId,
@@ -25,21 +27,24 @@ class ProductEntity extends Equatable {
   List<Object?> get props => [id];
 
   ProductEntity copyWith({
-    required String name,
-    required String description,
-    required num price,
-    required int stock,
+    String? name,
+    String? description,
+    num? price,
+    int? stock,
     List<dynamic>? images,
+    double? rating,
+    bool? hasAttributes,
   }) {
     return ProductEntity(
       id: id,
+      rating: rating ?? this.rating,
       categoryId: categoryId,
-      name: name,
-      price: price.toInt(),
-      description: description,
+      name: name ?? this.name,
+      price: price?.toInt() ?? this.price,
+      description: description ?? this.description,
       image: images ?? image,
-      stock: stock,
-      hasAttributes: hasAttributes,
+      stock: stock ?? this.stock,
+      hasAttributes: hasAttributes ?? this.hasAttributes,
     );
   }
 }

@@ -4,10 +4,11 @@ import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
 import 'package:swift_mobile_app/features/client/home/data/models/category_model.dart';
-import 'package:swift_mobile_app/features/client/home/data/models/product_model.dart';
 import 'package:swift_mobile_app/features/client/home/domain/entities/category_card_entity.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/home/domain/repos/home_repo.dart';
+
+import '../../../../../core/entities/product_entity.dart';
+import '../../../../../core/models/product_model.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final DataBaseService dataBaseService;

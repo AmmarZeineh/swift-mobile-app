@@ -1,13 +1,12 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mobile_app/features/client/auth/domain/entities/client_entity.dart';
+import 'package:equatable/equatable.dart';
 
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserInitial());
 
-  void setUser(ClientEntity user) {
+  void setUser(dynamic user) {
     emit(UserLoaded(user));
   }
 
@@ -15,8 +14,12 @@ class UserCubit extends Cubit<UserState> {
     emit(UserInitial());
   }
 
-  ClientEntity? get currentUser =>
+  dynamic get currentUser =>
       state is UserLoaded ? (state as UserLoaded).user : null;
 
   bool get isLoggedIn => state is UserLoaded;
+
+  bool get isSeller => currentUser != null && currentUser.sellerId != null;
+
+  bool get isClient => currentUser != null && currentUser.sellerId == null;
 }

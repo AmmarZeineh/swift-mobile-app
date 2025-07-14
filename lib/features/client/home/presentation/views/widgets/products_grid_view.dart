@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/cubits/fetch_product_cubit/fetch_products_cubit.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/product_card.dart';
+import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/client_product_card.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 class ProductsGridView extends StatefulWidget {
   const ProductsGridView({super.key, required this.products});
@@ -50,7 +51,7 @@ class _ProductsGridViewState extends State<ProductsGridView> {
         ),
         itemCount: widget.products.length,
         itemBuilder: (context, index) {
-          return ProductCard(productEntity: widget.products[index]);
+          return ClientProductCard(productEntity: widget.products[index]);
         },
       ),
     );

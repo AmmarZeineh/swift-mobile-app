@@ -6,7 +6,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:swift_mobile_app/constats.dart';
+import 'package:swift_mobile_app/core/cubits/edit_profile_details_cubit/edit_profile_details_cubit.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_edit_profile_info_dialog.dart';
 import 'package:swift_mobile_app/core/helper_functions/show_log_out_dialog.dart';
@@ -15,10 +15,11 @@ import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/features/client/auth/data/models/client_model.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/entities/client_entity.dart';
-import 'package:swift_mobile_app/features/client/profile/presentation/cubits/edit_profile_details_cubit/edit_profile_details_cubit.dart';
 import 'package:swift_mobile_app/features/client/profile/presentation/views/widgets/info_action_button.dart';
 import 'package:swift_mobile_app/features/client/profile/presentation/views/widgets/info_card.dart';
 import 'package:swift_mobile_app/features/client/profile/presentation/views/widgets/profile_info_header.dart';
+
+import '../../../../../../constants.dart';
 
 class ClientProfileViewBody extends StatelessWidget {
   final ClientEntity clientEntity;
@@ -139,7 +140,6 @@ class ClientProfileViewBody extends StatelessWidget {
 
       // بدء عملية التحديث
       await context.read<EditProfileDetailsCubit>().editProfileDetails(
-        clientEntity: currentClient,
         newData: {'phone': value},
         columnName: 'id',
         columnValue: currentClient.id,

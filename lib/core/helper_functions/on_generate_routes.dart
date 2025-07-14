@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:swift_mobile_app/core/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/views/client_login_view.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/views/client_sign_up_view.dart';
 import 'package:swift_mobile_app/features/client/cart/presentation/views/cart_view.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/client_home_view.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/search_view.dart';
 import 'package:swift_mobile_app/features/client/order/data/models/order_item_model.dart';
@@ -13,7 +13,6 @@ import 'package:swift_mobile_app/features/onboarding/presentation/views/onboardi
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/add_product_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_signup_view.dart';
-import 'package:swift_mobile_app/features/seller/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_product_details_view.dart';
 import 'package:swift_mobile_app/features/seller/profile/presentation/views/seller_profile_view.dart';
@@ -23,15 +22,29 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case OnboardingView.routeName:
       return MaterialPageRoute(builder: (_) => const OnboardingView());
     case ClientHomeView.routeName:
-      return MaterialPageRoute(builder: (_) => const ClientHomeView());
+      return MaterialPageRoute(builder: (_) => ClientHomeView());
+    case SellerLoginView.routeName:
+      return MaterialPageRoute(builder: (_) => const SellerLoginView());
+    case SellerProductDetailsView.routeName:
+      return MaterialPageRoute(
+        builder: (_) => SellerProductDetailsView(
+          productEntity: settings.arguments as ProductEntity,
+        ),
+      );
+    case AddProductView.routeName:
+      return MaterialPageRoute(builder: (_) => const AddProductView());
+    case SellerProfileView.routeName:
+      return MaterialPageRoute(builder: (_) => const SellerProfileView());
+    case SellerHomeView.routeName:
+      return MaterialPageRoute(builder: (_) => const SellerHomeView());
     case SellerSignupView.routeName:
       return MaterialPageRoute(builder: (_) => const SellerSignupView());
     case ClientProductInfoView.routName: // تم إصلاح routName إلى routeName
       final product =
           settings.arguments as ProductEntity; // استخراج الـ arguments
       return MaterialPageRoute(
-        builder:
-            (_) => ClientProductInfoView(product: product), // تمرير الـ product
+        builder: (_) =>
+            ClientProductInfoView(product: product), // تمرير الـ product
       );
     case ClientLoginView.routeName:
       return MaterialPageRoute(builder: (_) => const ClientLoginView());

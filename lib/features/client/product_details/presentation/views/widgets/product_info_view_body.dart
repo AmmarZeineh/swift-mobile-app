@@ -5,7 +5,6 @@ import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/cubits/product_attribute_valuecubit/product_attribute_value_cubit.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/cubits/reviews_cubit/reviews_cubit.dart';
@@ -14,6 +13,8 @@ import 'package:swift_mobile_app/features/client/product_details/presentation/vi
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/custom_text.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/product_image.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/product_review_widget.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 class ProductInfoViewBody extends StatefulWidget {
   const ProductInfoViewBody({super.key, required this.product});
@@ -30,9 +31,9 @@ class _ProductInfoViewBodyState extends State<ProductInfoViewBody> {
   @override
   void initState() {
     context.read<ProductAttributesCubit>().fetchAttributesWithValues(
-      widget.product.id,
-      widget.product.categoryId,
-    );
+          widget.product.id,
+          widget.product.categoryId,
+        );
     context.read<ReviewsCubit>().fetchReviews(widget.product.id);
     super.initState();
   }
@@ -53,57 +54,53 @@ class _ProductInfoViewBodyState extends State<ProductInfoViewBody> {
           builder: (context, state) {
             return CustomElevatedButton(
               title: state is AddToCartLoading ? "جاري الإضافة" : "اضافة للسلة",
-              onPressed:
-                  state is AddToCartLoading
-                      ? () {}
-                      : () {
-                        final quantity = counterKey.currentState?.count ?? 1;
+              onPressed: state is AddToCartLoading
+                  ? () {}
+                  : () {
+                      final quantity = counterKey.currentState?.count ?? 1;
 
-                        // فحص المواصفات المطلوبة
-                        final requiredAttributes =
-                            context.read<ProductAttributesCubit>().state
-                                    is ProductAttributesSuccess
-                                ? (context.read<ProductAttributesCubit>().state
-                                        as ProductAttributesSuccess)
-                                    .attributesWithValues
-                                    .where((e) => e.attribute.isRequired)
-                                    .map((e) => e.attribute.name)
-                                    .toList()
-                                : [];
+                      // فحص المواصفات المطلوبة
+                      final requiredAttributes = context
+                              .read<ProductAttributesCubit>()
+                              .state is ProductAttributesSuccess
+                          ? (context.read<ProductAttributesCubit>().state
+                                  as ProductAttributesSuccess)
+                              .attributesWithValues
+                              .where((e) => e.attribute.isRequired)
+                              .map((e) => e.attribute.name)
+                              .toList()
+                          : [];
 
-                        final allSelected = requiredAttributes.every(
-                          (key) => selectedAttributes.containsKey(key),
+                      final allSelected = requiredAttributes.every(
+                        (key) => selectedAttributes.containsKey(key),
+                      );
+
+                      if (!allSelected) {
+                        showErrorMessage(
+                          "يرجى اختيار جميع المواصفات المطلوبة",
+                          context,
                         );
+                        return;
+                      }
 
-                        if (!allSelected) {
-                          showErrorMessage(
-                            "يرجى اختيار جميع المواصفات المطلوبة",
-                            context,
+                      // تجميع المواصفات كـ String
+                      final selectedSummary = selectedAttributes.entries
+                          .map((e) => "${e.key}: ${e.value}")
+                          .join(", ");
+
+                      // أرسل مع الداتا
+                      context.read<AddToCartCubit>().addToCart(
+                            userId: context.read<UserCubit>().currentUser!.id,
+                            product: widget.product,
+                            quantity: quantity,
+                            selectedAttributesSummary:
+                                selectedSummary, // ← أضف هذا الحقل
                           );
-                          return;
-                        }
-
-                        // تجميع المواصفات كـ String
-                        final selectedSummary = selectedAttributes.entries
-                            .map((e) => "${e.key}: ${e.value}")
-                            .join(", ");
-
-                        // أرسل مع الداتا
-                        context.read<AddToCartCubit>().addToCart(
-                          userId: context.read<UserCubit>().currentUser!.id,
-                          product: widget.product,
-                          quantity: quantity,
-                          selectedAttributesSummary:
-                              selectedSummary, // ← أضف هذا الحقل
-                        );
-                      },
-
-              width: double.infinity,
+                    },
             );
           },
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
@@ -149,14 +146,11 @@ class _ProductInfoViewBodyState extends State<ProductInfoViewBody> {
           ],
         ),
         SizedBox(height: 10),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: CustomText(widget: widget),
         ),
-
         SizedBox(height: 5.h),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(

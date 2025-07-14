@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:swift_mobile_app/features/client/home/domain/entities/product_entity.dart';
 import 'package:swift_mobile_app/features/client/home/domain/repos/home_repo.dart';
+
+import '../../../../../../core/entities/product_entity.dart';
 
 part 'search_product_state.dart';
 
