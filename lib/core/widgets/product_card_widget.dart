@@ -43,9 +43,12 @@ class SellerProductCard extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                child: Text(
-                  '\$ ${productEntity.price.toStringAsFixed(2)}',
-                  style: AppTextStyles.w700_16,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    '${productEntity.price.toStringAsFixed(2)} ل.س',
+                    style: AppTextStyles.w700_16,
+                  ),
                 ),
               ),
             ],

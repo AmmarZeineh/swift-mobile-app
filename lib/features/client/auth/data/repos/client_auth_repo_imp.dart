@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
 import 'package:swift_mobile_app/core/services/backend_endpoints.dart';
 import 'package:swift_mobile_app/core/services/database_service.dart';
-import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/features/client/auth/data/models/client_model.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/entities/client_entity.dart';
 import 'package:swift_mobile_app/features/client/auth/domain/repos/client_auth_repo.dart';
+import 'package:swift_mobile_app/main.dart';
 
 import '../../../../../constants.dart';
 
@@ -67,6 +69,7 @@ class ClientAuthRepoImp implements ClientAuthRepo {
   Future<Either<Failure, ClientEntity>> loginClient({
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
     try {
       // التسجيل في Supabase Auth
@@ -96,7 +99,11 @@ class ClientAuthRepoImp implements ClientAuthRepo {
       );
 
       Prefs.setString(clientKey, jsonEncode(clientModel.toJson()));
-      getIt.get<UserCubit>().setUser(clientEntity);
+
+      if (context.mounted) {
+        context.read<AppSessionCubit>().setUser(clientEntity, 'client');
+        context.read<UserCubit>().setUser(clientEntity);
+      }
 
       return Right(clientEntity);
     } catch (e) {

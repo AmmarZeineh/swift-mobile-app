@@ -16,6 +16,7 @@ import 'package:swift_mobile_app/core/services/supabase_auth_service.dart';
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/entity/seller_entity.dart';
 import 'package:swift_mobile_app/features/seller/auth/domain/repos/seller_auth_repo.dart';
+import 'package:swift_mobile_app/main.dart';
 
 class SellerAuthRepoImpl implements SellerAuthRepo {
   final SupabaseAuthService _supabaseAuthService;
@@ -159,6 +160,7 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       SellerEntity sellerEntity = sellerModel.toEntity();
       Prefs.setString(sellerKey, jsonEncode(sellerModel.toJson()));
       if (context.mounted) {
+        context.read<AppSessionCubit>().setUser(sellerEntity, 'seller');
         context.read<UserCubit>().setUser(sellerEntity);
       }
       return Right(sellerEntity);
@@ -167,11 +169,13 @@ class SellerAuthRepoImpl implements SellerAuthRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
-  
+
   @override
-  Future<Either<Failure, void>> logout() async {
+  Future<Either<Failure, void>> logout(BuildContext context) async {
     try {
       _supabaseAuthService.signOut();
+      context.read<AppSessionCubit>().logout();
+
       return Right(null);
     } catch (e) {
       log(e.toString());

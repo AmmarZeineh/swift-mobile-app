@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
+
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo.dart';
 import 'package:swift_mobile_app/core/repos/image_repo/image_repo_impl.dart';
 import 'package:swift_mobile_app/core/repos/profile_repo/profile_repo.dart';
@@ -39,8 +39,6 @@ void setupLocator() {
   getIt.registerSingleton<DataBaseService>(SupabaseDatabaseService());
   getIt.registerSingleton<StorageService>(SupabaseStorageService());
 
-  // Cubits
-  getIt.registerLazySingleton<UserCubit>(() => UserCubit());
 
   // Repositories - Shared
   getIt.registerSingleton<ImageRepo>(

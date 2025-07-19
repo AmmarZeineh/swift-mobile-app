@@ -5,7 +5,7 @@ import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/utils/app_images.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
-import 'package:swift_mobile_app/features/client/home/presentation/views/client_home_view.dart';
+import 'package:swift_mobile_app/features/client/auth/presentation/views/client_login_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 
 class OnboardingViewBody extends StatelessWidget {
@@ -79,7 +79,7 @@ class OnboardingViewBody extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
-                      ClientHomeView.routeName,
+                      ClientLoginView.routeName,
                     );
                   },
                 ),

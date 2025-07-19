@@ -15,7 +15,7 @@ import 'package:swift_mobile_app/core/widgets/images_page_view_builder.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/delete_product_cubit/delete_product_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_product_details_cubit/cubit/edit_product_details_cubit_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_product_reviews_cubit/cubit/fetch_product_reviews_cubit.dart';
-import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/seller_fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_attribute_values_section.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/product_details_row.dart';
@@ -209,7 +209,7 @@ class _SellerProductDetailsViewBodyState
 
                     ProductDetailsRow(
                       title: 'السعر',
-                      value: '${currentProduct.price.toString()}\$',
+                      value: '${currentProduct.price.toString()} ل.س',
                       onPressed: () {
                         showEditDialog(
                           currentProduct,
@@ -301,7 +301,7 @@ class _SellerProductDetailsViewBodyState
                                     .read<DeleteProductCubit>()
                                     .deleteProduct(currentProduct.id);
                                 await context
-                                    .read<FetchProductsCubit>()
+                                    .read<SellerFetchProductsCubit>()
                                     .fetchProducts(
                                       context
                                           .read<UserCubit>()

@@ -4,7 +4,7 @@ import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/product_card_widget.dart';
-import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/seller_fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_product_details_view.dart';
 
 class SellerHomeViewBody extends StatelessWidget {
@@ -12,7 +12,7 @@ class SellerHomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FetchProductsCubit, FetchProductsState>(
+    return BlocBuilder<SellerFetchProductsCubit, FetchProductsState>(
       builder: (context, state) {
         if (state is FetchProductsSuccess) {
           final products = state.products;
@@ -48,9 +48,9 @@ class SellerHomeViewBody extends StatelessWidget {
                         if (result == true && context.mounted) {
                           final userId =
                               context.read<UserCubit>().currentUser!.sellerId;
-                          context.read<FetchProductsCubit>().fetchProducts(
-                            userId,
-                          );
+                          context
+                              .read<SellerFetchProductsCubit>()
+                              .fetchProducts(userId);
                         }
                       },
                       child: SellerProductCard(productEntity: products[index]),

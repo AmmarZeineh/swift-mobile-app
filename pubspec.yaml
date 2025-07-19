@@ -38,17 +38,20 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_image_compress: ^2.4.0
   flutter_screenutil: ^5.9.3
   flutter_supabase_chat_core: ^1.5.0
   flutter_svg: ^2.1.0
   font_awesome_flutter: ^10.8.0
   get_it: ^8.0.3
   google_nav_bar: ^5.0.7
+  image: ^4.5.4
   image_picker: ^1.1.2
   intl: ^0.20.2
   meta: ^1.16.0
   modal_progress_hud_nsn: ^0.5.1
   path: ^1.9.1
+  path_provider: ^2.1.5
   provider: ^6.1.5
   readmore: ^3.0.0
   shared_preferences: ^2.5.3

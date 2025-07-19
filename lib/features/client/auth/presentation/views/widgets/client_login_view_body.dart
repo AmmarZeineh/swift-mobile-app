@@ -95,6 +95,7 @@ class _ClientLoginViewBodyState extends State<ClientLoginViewBody> {
                     context.read<ClientLoginCubit>().loginClient(
                       email!,
                       password!,
+                      context
                     );
                   } else {
                     setState(() {});

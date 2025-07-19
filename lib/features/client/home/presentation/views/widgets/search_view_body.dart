@@ -22,7 +22,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
       // RTL دعم
       textDirection: TextDirection.rtl,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           children: [
             Directionality(

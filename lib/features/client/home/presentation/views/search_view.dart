@@ -11,12 +11,10 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocProvider(
-          create: (context) => SearchProductCubit(getIt.get<HomeRepo>()),
-          child: SearchViewBody(),
-        ),
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => SearchProductCubit(getIt.get<HomeRepo>()),
+        child: SafeArea(child: SearchViewBody()),
       ),
     );
   }

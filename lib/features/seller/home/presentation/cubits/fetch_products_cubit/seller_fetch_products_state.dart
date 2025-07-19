@@ -1,6 +1,8 @@
-part of 'fetch_products_cubit.dart';
+part of 'seller_fetch_products_cubit.dart';
 
- class FetchProductsState extends Equatable {
+
+
+class FetchProductsState extends Equatable {
   const FetchProductsState();
 
   @override

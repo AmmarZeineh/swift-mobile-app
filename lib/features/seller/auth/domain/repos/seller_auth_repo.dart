@@ -26,5 +26,5 @@ abstract class SellerAuthRepo {
     required BuildContext context,
   });
 
-  Future<Either<Failure, void>> logout();
+  Future<Either<Failure, void>> logout(BuildContext context);
 }

@@ -12,7 +12,7 @@ import 'package:swift_mobile_app/features/seller/add_product/presentation/cubits
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/widgets/custom_details_text_field.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/widgets/custom_drop_down_button.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/widgets/product_image_uploader.dart';
-import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/fetch_products_cubit.dart';
+import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/seller_fetch_products_cubit.dart';
 
 class BasicProductDetailsCardSection extends StatefulWidget {
   const BasicProductDetailsCardSection({super.key});
@@ -178,7 +178,7 @@ class _BasicProductDetailsCardSectionState
                   context.read<UserCubit>().currentUser!.sellerId,
                 );
                 if (context.mounted) {
-                  context.read<FetchProductsCubit>().fetchProducts(
+                  context.read<SellerFetchProductsCubit>().fetchProducts(
                     context.read<UserCubit>().currentUser!.sellerId,
                   );
                 }
