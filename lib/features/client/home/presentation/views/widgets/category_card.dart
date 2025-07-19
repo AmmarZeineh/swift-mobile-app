@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/features/client/home/domain/entities/category_card_entity.dart';
@@ -32,12 +31,13 @@ class CategreyCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
             ),
-            height: 44.h,
-            width: 44.w,
+            height: MediaQuery.of(context).size.height * 0.07,
+            width: MediaQuery.of(context).size.width * 0.18,
             child: CachedNetworkImage(imageUrl: categoryCardEntity.image),
           ),
         ),
-        SizedBox(height: 5.h),
+
+        SizedBox(height: 5),
         Text(
           categoryCardEntity.name,
           style: AppTextStyles.w600_14.copyWith(

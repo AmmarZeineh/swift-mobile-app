@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
 import 'package:swift_mobile_app/core/helper_functions/snack_bars.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
@@ -13,7 +12,6 @@ import 'package:swift_mobile_app/features/client/product_details/presentation/vi
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/custom_text.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/product_image.dart';
 import 'package:swift_mobile_app/features/client/product_details/presentation/views/widgets/product_review_widget.dart';
-
 import '../../../../../../core/entities/product_entity.dart';
 
 class ProductInfoViewBody extends StatefulWidget {
@@ -28,170 +26,188 @@ class _ProductInfoViewBodyState extends State<ProductInfoViewBody> {
   final GlobalKey<CustomCounterState> counterKey =
       GlobalKey<CustomCounterState>();
   final Map<String, String> selectedAttributes = {};
+
   @override
   void initState() {
-    context.read<ProductAttributesCubit>().fetchAttributesWithValues(
-          widget.product.id,
-          widget.product.categoryId,
-        );
-    context.read<ReviewsCubit>().fetchReviews(widget.product.id);
     super.initState();
+    context.read<ProductAttributesCubit>().fetchAttributesWithValues(
+      widget.product.categoryId,
+      widget.product.id,
+    );
+    context.read<ReviewsCubit>().fetchReviews(widget.product.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
-        child: BlocConsumer<AddToCartCubit, AddToCartState>(
-          listener: (context, state) {
-            if (state is AddToCartSuccess) {
-              showSuccessMessage("تم اضافة المنتج بنجاح", context);
-            } else if (state is AddToCartFailure) {
-              showErrorMessage(state.errMessage, context);
-            }
-          },
-          builder: (context, state) {
-            return CustomElevatedButton(
-              title: state is AddToCartLoading ? "جاري الإضافة" : "اضافة للسلة",
-              onPressed: state is AddToCartLoading
-                  ? () {}
-                  : () {
-                      final quantity = counterKey.currentState?.count ?? 1;
+      bottomNavigationBar: _buildBottomButton(),
+      body: _buildBody(),
+    );
+  }
 
-                      // فحص المواصفات المطلوبة
-                      final requiredAttributes = context
-                              .read<ProductAttributesCubit>()
-                              .state is ProductAttributesSuccess
-                          ? (context.read<ProductAttributesCubit>().state
-                                  as ProductAttributesSuccess)
-                              .attributesWithValues
-                              .where((e) => e.attribute.isRequired)
-                              .map((e) => e.attribute.name)
-                              .toList()
-                          : [];
-
-                      final allSelected = requiredAttributes.every(
-                        (key) => selectedAttributes.containsKey(key),
-                      );
-
-                      if (!allSelected) {
-                        showErrorMessage(
-                          "يرجى اختيار جميع المواصفات المطلوبة",
-                          context,
-                        );
-                        return;
-                      }
-
-                      // تجميع المواصفات كـ String
-                      final selectedSummary = selectedAttributes.entries
-                          .map((e) => "${e.key}: ${e.value}")
-                          .join(", ");
-
-                      // أرسل مع الداتا
-                      context.read<AddToCartCubit>().addToCart(
-                            userId: context.read<UserCubit>().currentUser!.id,
-                            product: widget.product,
-                            quantity: quantity,
-                            selectedAttributesSummary:
-                                selectedSummary, // ← أضف هذا الحقل
-                          );
-                    },
-            );
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: SingleChildScrollView(
-          child: Column(children: [buildProductContent()]),
-        ),
+  Widget _buildBottomButton() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: BlocConsumer<AddToCartCubit, AddToCartState>(
+        listener: (context, state) {
+          if (state is AddToCartSuccess) {
+            showSuccessMessage("تم اضافة المنتج بنجاح", context);
+          } else if (state is AddToCartFailure) {
+            showErrorMessage(state.errMessage, context);
+          }
+        },
+        builder: (context, state) {
+          return CustomElevatedButton(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            title: state is AddToCartLoading ? "جاري الإضافة" : "اضافة للسلة",
+            onPressed: _handleAddToCart,
+          );
+        },
       ),
     );
   }
 
-  Widget buildProductContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+  Widget _buildBody() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ProductImage(product: widget.product),
+          const SizedBox(height: 24),
+          _buildProductHeader(),
+          const SizedBox(height: 16),
+          _buildProductRating(),
+          const SizedBox(height: 16),
+          _buildProductDescription(),
+          const SizedBox(height: 24),
+          _buildProductAttributes(),
+          const SizedBox(height: 24),
+          _buildProductReviews(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ProductImage(product: widget.product),
-        SizedBox(height: 25),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.product.name,
-              style: AppTextStyles.w500_24.copyWith(color: Colors.black),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 30.w),
-              child: Text(
-                '\$ ${widget.product.price}',
-                style: AppTextStyles.w700_30.copyWith(color: Colors.black),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10.h),
-        Row(
-          children: [
-            const Icon(Icons.star, color: Colors.yellow),
-            const SizedBox(width: 10),
-            Text(
-              widget.product.rating.toString(),
-              style: AppTextStyles.w700_18.copyWith(color: Colors.black),
-            ),
-            SizedBox(width: 160.w),
-            CustomCounter(key: counterKey),
-          ],
-        ),
-        SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CustomText(widget: widget),
-        ),
-        SizedBox(height: 5.h),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SizedBox(
-            height: 315.h,
-            child: BlocBuilder<ProductAttributesCubit, ProductAttributesState>(
-              builder: (context, state) {
-                if (state is ProductAttributesSuccess) {
-                  return AttributeListView(
-                    attributesWithValues: state.attributesWithValues,
-                    onValueSelected: (attrName, selectedVal) {
-                      setState(() {
-                        selectedAttributes[attrName] = selectedVal;
-                      });
-                    },
-                  );
-                } else if (state is ProductAttributesFailure) {
-                  return Center(child: Text('حدث خطأ: ${state.errMessage}'));
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+        Expanded(
+          child: Text(
+            widget.product.name,
+            style: AppTextStyles.w500_24.copyWith(color: Colors.black),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: BlocBuilder<ReviewsCubit, ReviewsState>(
-            builder: (context, state) {
-              if (state is ReviewsLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is ReviewsError) {
-                return Text(state.message, style: TextStyle(color: Colors.red));
-              } else if (state is ReviewsLoaded) {
-                return ProductReviewsWidget(reviews: state.reviews);
-              } else {
-                return const SizedBox();
-              }
-            },
-          ),
+        const SizedBox(width: 16),
+        Text(
+          '\$ ${widget.product.price}',
+          style: AppTextStyles.w700_30.copyWith(color: Colors.black),
         ),
       ],
+    );
+  }
+
+  Widget _buildProductRating() {
+    return Row(
+      children: [
+        const Icon(Icons.star, color: Colors.orange),
+        const SizedBox(width: 8),
+        Text(
+          widget.product.rating.toString(),
+          style: AppTextStyles.w700_18.copyWith(color: Colors.black),
+        ),
+        const Spacer(),
+        CustomCounter(key: counterKey),
+      ],
+    );
+  }
+
+  Widget _buildProductDescription() {
+    return CustomText(widget: widget);
+  }
+
+  Widget _buildProductAttributes() {
+    return BlocBuilder<ProductAttributesCubit, ProductAttributesState>(
+      builder: (context, state) {
+        if (state is ProductAttributesSuccess) {
+          return AttributeListView(
+            attributesWithValues: state.attributesWithValues,
+            onValueSelected: (attrName, selectedVal) {
+              setState(() {
+                selectedAttributes[attrName] = selectedVal;
+              });
+            },
+          );
+        } else if (state is ProductAttributesFailure) {
+          return Center(
+            child: Text(
+              'حدث خطأ: ${state.errMessage}',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  Widget _buildProductReviews() {
+    return BlocBuilder<ReviewsCubit, ReviewsState>(
+      builder: (context, state) {
+        if (state is ReviewsLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is ReviewsError) {
+          return Center(
+            child: Text(
+              state.message,
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
+        } else if (state is ReviewsLoaded) {
+          return ProductReviewsWidget(reviews: state.reviews);
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  void _handleAddToCart() {
+    final quantity = counterKey.currentState?.count ?? 1;
+
+    // فحص المواصفات المطلوبة
+    final cubitState = context.read<ProductAttributesCubit>().state;
+    if (cubitState is! ProductAttributesSuccess) return;
+
+    final requiredAttributes =
+        cubitState.attributesWithValues
+            .where((e) => e.attribute.isRequired)
+            .map((e) => e.attribute.name)
+            .toList();
+
+    final allSelected = requiredAttributes.every(
+      (key) => selectedAttributes.containsKey(key),
+    );
+
+    if (!allSelected) {
+      showErrorMessage("يرجى اختيار جميع المواصفات المطلوبة", context);
+      return;
+    }
+
+    // تجميع المواصفات
+    final selectedSummary = selectedAttributes.entries
+        .map((e) => "${e.key}: ${e.value}")
+        .join(", ");
+
+    // إضافة للسلة
+    context.read<AddToCartCubit>().addToCart(
+      userId: context.read<UserCubit>().currentUser!.id,
+      product: widget.product,
+      quantity: quantity,
+      selectedAttributesSummary: selectedSummary,
     );
   }
 }

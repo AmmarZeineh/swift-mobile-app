@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +62,11 @@ void main() async {
   runApp(
     BlocProvider(
       create: (_) => AppSessionCubit()..setUser(user, userRole),
-      child: const SwiftMobileApp(),
+      child: DevicePreview(
+        builder: (context) {
+          return const SwiftMobileApp();
+        },
+      ),
     ),
   );
 }

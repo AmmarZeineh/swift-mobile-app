@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:swift_mobile_app/core/entities/review_entity.dart';
 import 'package:swift_mobile_app/core/errors/failure.dart';
@@ -19,12 +20,13 @@ class ProductDetailsRepoImp implements ProductDetailsRepo {
   Future<Either<ServerFailure, List<ProductAttributeValueEntity>>>
   getProductAttributeValues(int productId) async {
     try {
-      List<ProductAttributeValueEntity> attributeValues = [];
+     List<ProductAttributeValueEntity> attributeValues = [];
       var data = await dataBaseServic.getData(
         path: BackendEndpoints.attributesValues,
         columnName: "product_id",
-        columnValue: productId.toString(),
+        columnValue: productId,
       );
+
       for (var i = 0; i < data.length; i++) {
         attributeValues.add(AttributeValueModel.fromJson(data[i]).toEntity());
       }
@@ -42,7 +44,7 @@ class ProductDetailsRepoImp implements ProductDetailsRepo {
       var data = await dataBaseServic.getData(
         path: BackendEndpoints.attributes,
         columnName: "category_id",
-        columnValue: categoryId.toString(),
+        columnValue: categoryId,
       );
       for (var i = 0; i < data.length; i++) {
         productAttributes.add(
@@ -79,8 +81,11 @@ class ProductDetailsRepoImp implements ProductDetailsRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
-   @override
-  Future<Either<Failure, List<ReviewEntity>>> fetchReviewsForProduct(int productId) async {
+
+  @override
+  Future<Either<Failure, List<ReviewEntity>>> fetchReviewsForProduct(
+    int productId,
+  ) async {
     try {
       final data = await dataBaseServic.getData(
         path: 'reviews',
@@ -88,14 +93,14 @@ class ProductDetailsRepoImp implements ProductDetailsRepo {
         columnValue: productId,
       );
 
-      final reviews = (data as List)
-          .map((json) => ReviewModel.fromJson(json).toEntity())
-          .toList();
+      final reviews =
+          (data as List)
+              .map((json) => ReviewModel.fromJson(json).toEntity())
+              .toList();
 
       return Right(reviews);
     } catch (e) {
-      return Left(ServerFailure( 'فشل تحميل التقييمات: ${e.toString()}'));
+      return Left(ServerFailure('فشل تحميل التقييمات: ${e.toString()}'));
     }
   }
 }
-

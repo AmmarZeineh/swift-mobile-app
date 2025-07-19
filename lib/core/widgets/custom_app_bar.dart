@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/utils/app_images.dart';
@@ -13,19 +12,19 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: 24.w),
+        SizedBox(width: 24),
 
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, SearchView.routeName),
           child: Padding(
-            padding: EdgeInsets.only(top: 18.h),
+            padding: EdgeInsets.only(top: 18),
             child: Image.asset(Assets.imagesSearch, width: 24, height: 24),
           ),
         ),
 
         Spacer(),
         Padding(
-          padding: EdgeInsets.only(top: 5.h),
+          padding: EdgeInsets.only(top: 5),
           child: Column(
             children: [
               Text(
@@ -47,11 +46,11 @@ class CustomAppBar extends StatelessWidget {
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, CartView.routeName),
           child: Padding(
-            padding: EdgeInsets.only(top: 18.h),
+            padding: EdgeInsets.only(top: 18),
             child: Image.asset(Assets.imagesCart, width: 24, height: 24),
           ),
         ),
-        SizedBox(width: 24.w),
+        SizedBox(width: 24),
       ],
     );
   }

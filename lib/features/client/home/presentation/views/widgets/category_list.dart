@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/features/client/home/domain/entities/category_card_entity.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/category_card.dart';
 
@@ -23,12 +22,12 @@ class _CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 20.w),
+      padding: EdgeInsets.only(left: 20),
       itemCount: widget.categories.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.only(right: 25.w),
+          padding: EdgeInsets.only(right: 25),
           child: CategreyCard(
             categoryCardEntity: widget.categories[index],
             isSelected: selectedIndex == index,

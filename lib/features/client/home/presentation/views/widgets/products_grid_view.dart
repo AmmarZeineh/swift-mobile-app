@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/cubits/fetch_product_cubit/fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/widgets/client_product_card.dart';
 
@@ -45,9 +44,9 @@ class _ProductsGridViewState extends State<ProductsGridView> {
         controller: _scrollController,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 15.h,
-          mainAxisSpacing: 10.w,
-          childAspectRatio: 0.65,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 10,
+          childAspectRatio: 5 / 7.9,
         ),
         itemCount: widget.products.length,
         itemBuilder: (context, index) {

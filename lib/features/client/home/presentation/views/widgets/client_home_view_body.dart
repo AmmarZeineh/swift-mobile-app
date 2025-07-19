@@ -35,8 +35,7 @@ class _ClientHomeViewBodyState extends State<ClientHomeViewBody> {
         children: [
           CustomAppBar(),
           SizedBox(height: 20.h),
-          SizedBox(
-            height: 100.h,
+          Expanded(
             child: BlocBuilder<FetchCategoriesCubit, FetchCategoriesState>(
               builder: (context, state) {
                 if (state is FetchCategoriesFailure) {
@@ -52,6 +51,7 @@ class _ClientHomeViewBodyState extends State<ClientHomeViewBody> {
             ),
           ),
           Expanded(
+            flex: 5,
             child: BlocBuilder<FetchProductsCubit, FetchProductsState>(
               builder: (context, state) {
                 if (state is FetchProductsFailure) {
