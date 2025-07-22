@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:swift_mobile_app/app_keys.dart';
 import 'package:swift_mobile_app/constants.dart';
 import 'package:swift_mobile_app/core/cubits/user_cubit/user_cubit.dart';
@@ -15,14 +14,11 @@ import 'package:swift_mobile_app/core/services/custom_bloc_observer.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/core/services/shared_preference_singletone.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
-
 import 'package:swift_mobile_app/features/client/auth/data/models/client_model.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/views/client_home_view.dart';
-
 import 'package:swift_mobile_app/features/seller/auth/data/models/seller_model.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_products_cubit/seller_fetch_products_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/seller_home_view.dart';
-
 import 'package:swift_mobile_app/features/seller/add_product/domain/repos/add_product_repo.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/cubits/fetch_categories_cubit/fetch_categories_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/domain/repos/seller_home_repo.dart';
@@ -31,7 +27,6 @@ import 'package:swift_mobile_app/features/seller/home/presentation/cubits/edit_p
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/fetch_product_reviews_cubit/cubit/fetch_product_reviews_cubit.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/cubits/product_attributes_cubit/product_attributes_cubit.dart';
 import 'package:swift_mobile_app/core/cubits/edit_profile_details_cubit/edit_profile_details_cubit.dart';
-
 import 'package:swift_mobile_app/features/onboarding/presentation/views/onboarding_view.dart';
 
 void main() async {
@@ -71,10 +66,6 @@ void main() async {
   );
 }
 
-// ==========================================
-// AppSessionCubit (أضفه بنفس هذا الملف أو ملف منفصل)
-// ==========================================
-
 class AppSessionState {
   final dynamic user;
   final String userRole;
@@ -96,10 +87,6 @@ class AppSessionCubit extends Cubit<AppSessionState> {
     emit(AppSessionState());
   }
 }
-
-// ==========================================
-// SwiftMobileApp
-// ==========================================
 
 class SwiftMobileApp extends StatelessWidget {
   const SwiftMobileApp({super.key});

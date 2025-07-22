@@ -27,7 +27,6 @@ class _OrderViewBodyState extends State<OrderViewBody> {
     return Column(
       children: [
         CustomAppBar(text: "طلباتي", isArrowActive: false),
-        SizedBox(height: 20),
         Expanded(
           child: BlocBuilder<OrdersCubit, OrdersState>(
             builder: (context, state) {

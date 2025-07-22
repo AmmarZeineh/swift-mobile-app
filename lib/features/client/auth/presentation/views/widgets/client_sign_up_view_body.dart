@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
+import 'package:swift_mobile_app/core/widgets/terms_conditions_dialog.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/cubits/client_signup_cubit/client_signup_cubit.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/views/client_login_view.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/views/widgets/custom_header.dart';
@@ -22,9 +23,10 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   File? image;
   String? name, email, password, phoneNumber, storeName, storeAddress;
-  String? gender; // إضافة متغير الجنس
-  int? age; // إضافة متغير العمر
+  String? gender;
+  int? age;
   bool isObscure = true;
+  bool acceptedTerms = false; // متغير لحفظ حالة الموافقة على الشروط
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +77,8 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                         title: 'رقم الهاتف',
                         textInputType: TextInputType.number,
                       ),
-                      SizedBox(height: 30),// إضافة حقل الجنس
+                      SizedBox(height: 30),
+                      // حقل الجنس
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -137,7 +140,8 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30),// إضافة حقل العمر
+                      SizedBox(height: 30),
+                      // حقل العمر
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -172,7 +176,7 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                                 isExpanded: true,
                                 alignment: Alignment.centerRight,
                                 items: List.generate(
-                                  68, // من 13 إلى 80 (68 رقم)
+                                  68, // من 13 إلى 80
                                   (index) => DropdownMenuItem(
                                     value: index + 13,
                                     child: Text(
@@ -193,7 +197,6 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                         ],
                       ),
                       SizedBox(height: 30),
-
                       CustomFormTextField(
                         onSaved: (p0) {
                           password = p0;
@@ -213,8 +216,102 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                         title: 'كلمة المرور',
                         textInputType: TextInputType.text,
                       ),
+                      SizedBox(height: 20),
 
-                      SizedBox(height: 16),GestureDetector(
+                      // قسم الشروط والأحكام
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color:
+                                acceptedTerms
+                                    ? AppColors.primaryColor.withOpacity(0.3)
+                                    : Colors.red.withOpacity(0.3),
+                            width: acceptedTerms ? 1 : 1.5,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _showTermsAndConditionsDialog(context);
+                                    },
+                                    child: RichText(
+                                      textAlign: TextAlign.right,
+                                      text: TextSpan(
+                                        style: AppTextStyles.w400_14.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        children: [
+                                          TextSpan(text: 'أوافق على '),
+                                          TextSpan(
+                                            text: 'الشروط والأحكام',
+                                            style: AppTextStyles.w600_14
+                                                .copyWith(
+                                                  color:
+                                                      AppColors.secondaryColor,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                          ),
+                                          TextSpan(text: ' و'),
+                                          TextSpan(
+                                            text: 'سياسة الخصوصية',
+                                            style: AppTextStyles.w600_14
+                                                .copyWith(
+                                                  color:
+                                                      AppColors.secondaryColor,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Transform.scale(
+                                  scale: 1.2,
+                                  child: Checkbox(
+                                    value: acceptedTerms,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        acceptedTerms = value ?? false;
+                                      });
+                                    },
+                                    activeColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (!acceptedTerms)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  'يجب الموافقة على الشروط والأحكام للمتابعة',
+                                  style: AppTextStyles.w400_12.copyWith(
+                                    color: Colors.red,
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 16),
+                      GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                             context,
@@ -241,7 +338,8 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                 onPressed: () {
                   if (formKey.currentState!.validate() &&
                       gender != null &&
-                      age != null) {
+                      age != null &&
+                      acceptedTerms) {
                     formKey.currentState!.save();
 
                     context.read<ClientSignupCubit>().signupClient(
@@ -249,19 +347,31 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
                       password!,
                       name!,
                       phoneNumber!,
-                      gender!, // إضافة الجنس
-                      age!, // إضافة العمر
+                      gender!,
+                      age!,
                     );
                   } else {
-                    setState(() {});
-                    autovalidateMode = AutovalidateMode.onUserInteraction;
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.onUserInteraction;
+                    });
 
-                    // إظهار رسالة خطأ إذا لم يتم اختيار الجنس أو العمر
+                    String errorMessage = '';
                     if (gender == null || age == null) {
+                      errorMessage = 'يرجى اختيار الجنس والعمر';
+                    } else if (!acceptedTerms) {
+                      errorMessage = 'يجب الموافقة على الشروط والأحكام';
+                    }
+
+                    if (errorMessage.isNotEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('يرجى اختيار الجنس والعمر'),
+                          content: Text(errorMessage),
                           backgroundColor: Colors.red,
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.all(16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       );
                     }
@@ -272,6 +382,15 @@ class _ClientSignupViewBodyState extends State<ClientSignupViewBody> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showTermsAndConditionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TermsConditionsDialog();
+      },
     );
   }
 }

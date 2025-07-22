@@ -12,21 +12,26 @@ class TotalPriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log(cartList.toString());
-    return SizedBox(
-      width: 297.w,
-      height: 27.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Total : ",
-            style: AppTextStyles.w700_20.copyWith(color: Colors.grey.shade600),
-          ),
-          Text(
-            "\$ ${caculateTotalPrice(cartList).toString()}",
-            style: AppTextStyles.w700_20,
-          ),
-        ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: SizedBox(
+        width: 297,
+        height: 30,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "المجموع : ",
+              style: AppTextStyles.w700_20.copyWith(
+                color: Colors.grey.shade600,
+              ),
+            ),
+            Text(
+              "ل.س ${caculateTotalPrice(cartList).toString()}",
+              style: AppTextStyles.w700_20,
+            ),
+          ],
+        ),
       ),
     );
   }

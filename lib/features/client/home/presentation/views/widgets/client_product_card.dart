@@ -86,9 +86,15 @@ class _ClientProductCardState extends State<ClientProductCard> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-            child: Text(
-              '\$ ${widget.productEntity.price}',
-              style: AppTextStyles.w700_16,
+            child: Row(
+              children: [
+                Text(' ل.س', style: AppTextStyles.w700_16),
+                SizedBox(width: 4),
+                Text(
+                  '${widget.productEntity.price}',
+                  style: AppTextStyles.w700_16,
+                ),
+              ],
             ),
           ),
         ],

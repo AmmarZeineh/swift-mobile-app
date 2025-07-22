@@ -12,13 +12,8 @@ class CartItemList extends StatelessWidget {
       itemCount: cartList.length,
       itemBuilder:
           (context, index) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CartItem(
-                cartItemWithProductEntity: cartList[index],
-              ),
-            ),
+            padding: const EdgeInsets.only(right: 20, left: 20, bottom: 12),
+            child: CartItem(cartItemWithProductEntity: cartList[index]),
           ),
     );
   }

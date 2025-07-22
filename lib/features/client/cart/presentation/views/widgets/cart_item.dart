@@ -16,79 +16,83 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 124.h,
-      width: 334.w,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: cartItemWithProductEntity.product.image[0],
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.fill,
-                ),
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: CachedNetworkImage(
+                imageUrl: cartItemWithProductEntity.product.image[0],
+                height: 100.h,
+                width: 100.w,
+                fit: BoxFit.cover,
               ),
-              SizedBox(width: 20),
-              SizedBox(
-                width: 130,
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     Text(
                       cartItemWithProductEntity.product.name,
-                      style: AppTextStyles.w300_14,
+                      style: AppTextStyles.w300_14.copyWith(fontSize: 14.sp),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 6.h),
                     Text(
-                      "\$ ${cartItemWithProductEntity.product.price}",
-                      style: AppTextStyles.w700_16.copyWith(color: Colors.grey),
+                      "${cartItemWithProductEntity.product.price} ل.س",
+                      style: AppTextStyles.w700_16.copyWith(
+                        color: Colors.grey,
+                        fontSize: 16.sp,
+                      ),
                     ),
+                    SizedBox(height: 4.h),
                     Text(
-                      "qauntity : ${cartItemWithProductEntity.quantity.toString()}",
-                      style: AppTextStyles.w300_14,
+                      "الكمية: ${cartItemWithProductEntity.quantity}",
+                      style: AppTextStyles.w300_14.copyWith(fontSize: 14.sp),
                     ),
                   ],
                 ),
               ),
-              SizedBox(width: 55.w),
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      final int cartItemId = cartItemWithProductEntity.id;
-                      final userId = context.read<UserCubit>().currentUser!.id;
-
-                      context.read<CartItemsCubit>().deleteCartItem(
-                        cartItemId: cartItemId,
-                        userId: userId,
-                      );
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.xmark,
-                      size: 24.sp,
-                      color: AppColors.primaryColor,
-                    ),
+            ),
+            SizedBox(width: 8.w),
+            Column(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    final cartItemId = cartItemWithProductEntity.id;
+                    final userId = context.read<UserCubit>().currentUser!.id;
+                    context.read<CartItemsCubit>().deleteCartItem(
+                      cartItemId: cartItemId,
+                      userId: userId,
+                    );
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.xmark,
+                    size: 20.sp,
+                    color: AppColors.primaryColor,
                   ),
-                  InfoCartProductButton(
-                    cartItemWithProductEntity: cartItemWithProductEntity,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-          SizedBox(
-            width: 300.w,
-            child: Divider(thickness: 3, color: Colors.grey.shade200),
-          ),
-        ],
-      ),
+                ),
+                InfoCartProductButton(
+                  cartItemWithProductEntity: cartItemWithProductEntity,
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 10.h),
+        Divider(
+          thickness: 2.h,
+          color: Colors.grey.shade300,
+          indent: 10.w,
+          endIndent: 10.w,
+        ),
+      ],
     );
   }
 }

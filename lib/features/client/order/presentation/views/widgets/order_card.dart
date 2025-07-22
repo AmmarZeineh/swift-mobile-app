@@ -136,7 +136,6 @@ class OrderItem extends StatelessWidget {
 
                 SizedBox(height: 16.h),
 
-                // Order details - responsive layout
                 if (isSmallScreen) ...[
                   // Small screen: vertical layout
                   Column(
@@ -186,7 +185,6 @@ class OrderItem extends StatelessWidget {
 
                       SizedBox(height: 12.h),
 
-                      // Total amount and cancel button
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -204,7 +202,7 @@ class OrderItem extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              '${order.totalAmount.toStringAsFixed(2)} ر.س',
+                              '${order.totalAmount.toStringAsFixed(2)}  ل.س',
                               style: AppTextStyles.w700_16.copyWith(
                                 color: AppColors.primaryColor,
                               ),

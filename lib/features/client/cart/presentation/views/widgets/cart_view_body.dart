@@ -31,7 +31,7 @@ class _CartViewBodyState extends State<CartViewBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomAppBar(text: "My Cart"),
+        CustomAppBar(text: "السلة"),
         SizedBox(height: 14),
         Expanded(
           child: BlocBuilder<CartItemsCubit, CartItemState>(
@@ -51,7 +51,7 @@ class _CartViewBodyState extends State<CartViewBody> {
           height: 60,
           width: 335,
           child: CustomElevatedButton(
-            title: "Checkout",
+            title: "شراء",
             onPressed: () async {
               final String result = await showModalBottomSheet(
                 context: context,
@@ -74,7 +74,7 @@ class _CartViewBodyState extends State<CartViewBody> {
             },
           ),
         ),
-        SizedBox(height: 30.h),
+        SizedBox(height: 30),
       ],
     );
   }

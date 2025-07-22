@@ -18,56 +18,58 @@ class _SearchViewBodyState extends State<SearchViewBody> {
   int? selectedCategoryId;
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      // RTL دعم
-      textDirection: TextDirection.rtl,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          children: [
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: CustomAppBar(text: "البحث"),
-            ),
-            SearchField(
+    return Column(
+      children: [
+        CustomAppBar(text: "البحث"),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: SearchField(
               controller: _controller,
               selectedCategoryId: selectedCategoryId,
             ),
+          ),
+        ),
 
-            const SizedBox(height: 12),
+        const SizedBox(height: 12),
 
-            ImprovedCategoryDropdown(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ImprovedCategoryDropdown(
               selectedCategoryId: selectedCategoryId,
               onChanged: (value) {
                 setState(() => selectedCategoryId = value);
               },
             ),
-
-            const SizedBox(height: 12),
-
-            // النتائج
-            Expanded(
-              child: BlocBuilder<SearchProductCubit, SearchProductState>(
-                builder: (context, state) {
-                  if (state is SearchLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is SearchLoaded) {
-                    if (state.products.isEmpty) {
-                      return const Center(child: Text('لا توجد نتائج'));
-                    }
-
-                    return ProductsGridView(products: state.products);
-                  } else if (state is SearchError) {
-                    return Center(child: Text(state.message));
-                  }
-
-                  return const SizedBox();
-                },
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+
+        const SizedBox(height: 12),
+
+        // النتائج
+        Expanded(
+          child: BlocBuilder<SearchProductCubit, SearchProductState>(
+            builder: (context, state) {
+              if (state is SearchLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is SearchLoaded) {
+                if (state.products.isEmpty) {
+                  return const Center(child: Text('لا توجد نتائج'));
+                }
+
+                return ProductsGridView(products: state.products);
+              } else if (state is SearchError) {
+                return Center(child: Text(state.message));
+              }
+
+              return const SizedBox();
+            },
+          ),
+        ),
+      ],
     );
   }
 }

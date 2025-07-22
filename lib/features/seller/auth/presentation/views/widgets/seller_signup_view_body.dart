@@ -8,6 +8,7 @@ import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/core/widgets/custom_text_form_field.dart';
+import 'package:swift_mobile_app/core/widgets/terms_conditions_dialog.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/cubits/seller_signup_cubit/seller_signup_cubit.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/widgets/custom_header.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/widgets/image_picker_container.dart';
@@ -25,6 +26,8 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
   File? image;
   String? name, email, password, phoneNumber, storeName, storeAddress;
   bool isObscure = true;
+  bool acceptedTerms = false; // متغير لحفظ حالة الموافقة على الشروط
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -101,18 +104,6 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                           textInputType: TextInputType.text,
                         ),
                         SizedBox(height: 30),
-                        // CustomFormTextField(
-                        //   onChanged: (p0) {
-                        //     if (p0 != password) {
-                        //       autovalidateMode = AutovalidateMode.always;
-                        //     }
-                        //   },
-                        //   prefixIcon: Icon(Icons.visibility),
-                        //   obscureText: true,
-                        //   title: 'تأكيد كلمة المرور',
-                        //   textInputType: TextInputType.text,
-                        // ),
-                        // SizedBox(height: 30),
                         CustomFormTextField(
                           onSaved: (p0) {
                             storeName = p0;
@@ -128,8 +119,105 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                           title: 'عنوان متجرك بالتفصيل',
                           textInputType: TextInputType.text,
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: 20),
 
+                        // قسم الشروط والأحكام
+                        Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor.withOpacity(0.05),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color:
+                                  acceptedTerms
+                                      ? AppColors.primaryColor.withOpacity(0.3)
+                                      : Colors.red.withOpacity(0.3),
+                              width: acceptedTerms ? 1 : 1.5,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _showTermsAndConditionsDialog(context);
+                                      },
+                                      child: RichText(
+                                        textAlign: TextAlign.right,
+                                        text: TextSpan(
+                                          style: AppTextStyles.w400_14.copyWith(
+                                            color: AppColors.primaryColor,
+                                          ),
+                                          children: [
+                                            TextSpan(text: 'أوافق على '),
+                                            TextSpan(
+                                              text: 'الشروط والأحكام',
+                                              style: AppTextStyles.w600_14
+                                                  .copyWith(
+                                                    color:
+                                                        AppColors
+                                                            .secondaryColor,
+                                                    decoration:
+                                                        TextDecoration
+                                                            .underline,
+                                                  ),
+                                            ),
+                                            TextSpan(text: ' و'),
+                                            TextSpan(
+                                              text: 'سياسة الخصوصية',
+                                              style: AppTextStyles.w600_14
+                                                  .copyWith(
+                                                    color:
+                                                        AppColors
+                                                            .secondaryColor,
+                                                    decoration:
+                                                        TextDecoration
+                                                            .underline,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Transform.scale(
+                                    scale: 1.2,
+                                    child: Checkbox(
+                                      value: acceptedTerms,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          acceptedTerms = value ?? false;
+                                        });
+                                      },
+                                      activeColor: AppColors.primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (!acceptedTerms)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    'يجب الموافقة على الشروط والأحكام للمتابعة',
+                                    style: AppTextStyles.w400_12.copyWith(
+                                      color: Colors.red,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 16),
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
@@ -164,7 +252,7 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                     padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
                     title: 'تسجيل',
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
+                      if (formKey.currentState!.validate() && acceptedTerms) {
                         formKey.currentState!.save();
                         if (image == null) {
                           showErrorMessage('يرجى اختيار صورة هوية', context);
@@ -180,8 +268,28 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
                           );
                         }
                       } else {
-                        setState(() {});
-                        autovalidateMode = AutovalidateMode.onUserInteraction;
+                        setState(() {
+                          autovalidateMode = AutovalidateMode.onUserInteraction;
+                        });
+
+                        String errorMessage = '';
+                        if (!acceptedTerms) {
+                          errorMessage = 'يجب الموافقة على الشروط والأحكام';
+                        }
+
+                        if (errorMessage.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(errorMessage),
+                              backgroundColor: Colors.red,
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.all(16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          );
+                        }
                       }
                     },
                   ),
@@ -191,6 +299,15 @@ class _SellerSignupViewBodyState extends State<SellerSignupViewBody> {
           ),
         ),
       ],
+    );
+  }
+
+  void _showTermsAndConditionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TermsConditionsDialog();
+      },
     );
   }
 }

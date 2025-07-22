@@ -348,7 +348,7 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16.h),
+      margin: EdgeInsets.only(bottom: 16.h, left: 8, right: 8),
       child: SizedBox(
         width: 334.w,
         child: Column(
@@ -378,11 +378,15 @@ class _CustomOrderItemState extends State<CustomOrderItem> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 6.h),
-                      Text(
-                        "\$ ${widget.orderItemEntity.price}",
-                        style: AppTextStyles.w700_16.copyWith(
-                          color: Colors.grey[600],
-                        ),
+                      Row(
+                        children: [
+                          Text(' ل.س', style: AppTextStyles.w700_16),
+                          SizedBox(width: 4),
+                          Text(
+                            '${widget.orderItemEntity.price}',
+                            style: AppTextStyles.w700_16,
+                          ),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       Text(

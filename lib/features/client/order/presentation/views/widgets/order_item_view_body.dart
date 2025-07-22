@@ -18,7 +18,7 @@ class OrderItemViewBody extends StatelessWidget {
     return Column(
       children: [
         CustomAppBar(text: "تفاصيل ", isArrowActive: false),
-        SizedBox(height: 30),
+        SizedBox(height: 8),
         OrderItemsListView(items: items, orderEntity: orderEntity),
       ],
     );
