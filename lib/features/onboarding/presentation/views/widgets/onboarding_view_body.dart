@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:swift_mobile_app/core/services/app_update_service.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/core/utils/app_font_styles.dart';
 import 'package:swift_mobile_app/core/utils/app_images.dart';
@@ -8,9 +9,19 @@ import 'package:swift_mobile_app/core/widgets/custom_elevated_button.dart';
 import 'package:swift_mobile_app/features/client/auth/presentation/views/client_login_view.dart';
 import 'package:swift_mobile_app/features/seller/auth/presentation/views/seller_login_view.dart';
 
-class OnboardingViewBody extends StatelessWidget {
+class OnboardingViewBody extends StatefulWidget {
   const OnboardingViewBody({super.key});
 
+  @override
+  State<OnboardingViewBody> createState() => _OnboardingViewBodyState();
+}
+
+class _OnboardingViewBodyState extends State<OnboardingViewBody> {
+  @override
+  void initState() {
+    AppUpdateService.checkForUpdates(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(

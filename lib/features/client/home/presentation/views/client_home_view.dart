@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swift_mobile_app/core/services/app_update_service.dart';
 import 'package:swift_mobile_app/core/services/get_it_service.dart';
 import 'package:swift_mobile_app/features/client/home/domain/repos/home_repo.dart';
 import 'package:swift_mobile_app/features/client/home/presentation/cubits/fetch_categories_cubit/fetch_categories_cubit.dart';
@@ -25,6 +26,11 @@ class _ClientHomeViewState extends State<ClientHomeView> {
     OrderView(), // لاحقًا استبدلها بـ FavoritesView()
     ClientProfileView(), // لاحقًا استبدلها بـ ProfileView()
   ];
+  @override
+  void initState() {
+    AppUpdateService.checkForUpdates(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

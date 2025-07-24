@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swift_mobile_app/core/services/app_update_service.dart';
 import 'package:swift_mobile_app/core/utils/app_colors.dart';
 import 'package:swift_mobile_app/features/seller/add_product/presentation/views/add_product_view.dart';
 import 'package:swift_mobile_app/features/seller/home/presentation/views/widgets/seller_home_view_body.dart';
@@ -22,7 +23,7 @@ class _SellerHomeViewState extends State<SellerHomeView> {
   ];
   @override
   void initState() {
-    
+    AppUpdateService.checkForUpdates(context);
     super.initState();
   }
 
