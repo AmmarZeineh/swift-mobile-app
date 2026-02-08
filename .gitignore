@@ -11,7 +11,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-
+lib/app_keys.dart
 # IntelliJ related
 *.iml
 *.ipr
@@ -32,7 +32,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-
+lib/app_keys.dart
 # Symbolication related
 app.*.symbols
 
